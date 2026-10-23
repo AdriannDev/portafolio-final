@@ -1,0 +1,9 @@
+---
+import { caseStudies } from '../../data/project-details';
+import ProjectDetails from '../../components/project-details/ProjectDetails.astro';
+export function getStaticPaths() {
+  return caseStudies.filter(study => study.projectId && study.mode === 'reference').map(study => ({ params: { slug: study.projectId! }, props: { study } }));
+}
+const { study } = Astro.props;
+---
+<ProjectDetails study={study} />

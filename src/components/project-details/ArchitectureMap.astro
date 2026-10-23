@@ -1,0 +1,321 @@
+---
+import type { Architecture, ArchitectureNode, NodeKind } from '../../types/project-details';
+
+interface Props {
+  architecture: Architecture;
+  id: string;
+}
+
+const { architecture, id } = Astro.props;
+const safeId = id.replace(/[^a-zA-Z0-9_-]/g, '-');
+const kinds: { kind: NodeKind; label: string }[] = [
+  { kind: 'custom', label: 'Desarrollo propio' },
+  { kind: 'platform', label: 'Plataforma' },
+  { kind: 'external', label: 'Cliente / servicio externo' },
+];
+
+// SVG text wraps at build time, so the diagram also works without JavaScript.
+function lines(text: string, limit: number): string[] {
+  const words = text.trim().split(/\s+/).flatMap((word) => {
+    if (word.length <= limit) return [word];
+    return word.match(new RegExp(`.{1,${limit}}`, 'g')) ?? [word];
+  });
+  return words.reduce<string[]>((result, word) => {
+    const previous = result[result.length - 1];
+    if (previous && previous.length + word.length + 1 <= limit) result[result.length - 1] += ` ${word}`;
+    else result.push(word);
+    return result;
+  }, []);
+}
+
+function nodeCopy(node: ArchitectureNode, width: number, mobile: boolean) {
+  const title = lines(node.label, Math.floor((width - 36) / 9));
+  const role = lines(node.role, Math.floor((width - 36) / (mobile ? 7.6 : 7)));
+  const technology = lines(node.technology, Math.floor((width - 36) / (mobile ? 7.2 : 6.2)));
+  const roleLineHeight = mobile ? 18 : 17;
+  const technologyLineHeight = mobile ? 17 : 15;
+  const roleY = 28 + (title.length - 1) * 20 + 25;
+  const technologyY = roleY + (role.length - 1) * roleLineHeight + 27;
+  return { title, role, technology, roleY, technologyY, roleLineHeight, technologyLineHeight, height: technologyY + (technology.length - 1) * technologyLineHeight + 20 };
+}
+
+function makeView(mobile: boolean) {
+  const width = mobile ? 248 : 236;
+  const copies = architecture.nodes.map((node) => nodeCopy(node, width, mobile));
+  const height = Math.max(140, ...copies.map((copy) => copy.height));
+  const rowGap = mobile ? 92 : 112;
+  const columnGap = 112;
+  const nodeIndex = new Map(architecture.nodes.map((node, index) => [node.id, index]));
+  const mobileGapItems: { edgeIndex: number; height: number; adjacent: boolean }[][] = architecture.nodes.slice(1).map(() => []);
+  const longConnections = architecture.edges.flatMap((edge, edgeIndex) => {
+    const fromIndex = nodeIndex.get(edge.from);
+    const toIndex = nodeIndex.get(edge.to);
+    if (fromIndex === undefined || toIndex === undefined || fromIndex === toIndex) return [];
+    const adjacent = Math.abs(fromIndex - toIndex) === 1;
+    mobileGapItems[Math.min(fromIndex, toIndex)].push({ edgeIndex, height: lines(edge.label, adjacent ? 18 : 17).length * 15 + 8, adjacent });
+    return adjacent ? [] : [{ ...edge, edgeIndex }];
+  });
+  mobileGapItems.forEach(items => items.sort((a, b) => Number(b.adjacent) - Number(a.adjacent)));
+  const mobileHeaderReservations = mobileGapItems.map(() => 0);
+  (architecture.groups ?? []).forEach(group => {
+    const firstMemberIndex = architecture.nodes.findIndex(node => node.group === group.id);
+    if (firstMemberIndex > 0) mobileHeaderReservations[firstMemberIndex - 1] = 60;
+  });
+  const mobileGapHeights = mobileGapItems.map((items, index) => Math.max(rowGap, items.reduce((sum, item) => sum + item.height, 0) + Math.max(0, items.length - 1) * 8 + 20) + mobileHeaderReservations[index]);
+  const positions = architecture.nodes.map((node, index) => ({
+    ...node,
+    x: mobile ? 36 : 48 + node.column * (width + columnGap),
+    y: mobile ? 72 + index * height + mobileGapHeights.slice(0, index).reduce((sum, gap) => sum + gap, 0) : 72 + node.row * (height + rowGap),
+    width,
+    height,
+    copy: copies[index],
+  }));
+  const positionById = new Map(positions.map((node) => [node.id, node]));
+  const mobileLabelY = new Map<number, number>();
+  mobileGapItems.forEach((items, gapIndex) => {
+    const totalHeight = items.reduce((sum, item) => sum + item.height, 0) + Math.max(0, items.length - 1) * 8;
+    let cursor = positions[gapIndex].y + height + (mobileGapHeights[gapIndex] - mobileHeaderReservations[gapIndex] - totalHeight) / 2;
+    items.forEach(item => {
+      mobileLabelY.set(item.edgeIndex, cursor + item.height / 2);
+      cursor += item.height + 8;
+    });
+  });
+  const verticalPorts = new Map<string, number>();
+  architecture.edges.forEach(edge => {
+    const from = positionById.get(edge.from);
+    const to = positionById.get(edge.to);
+    if (!from || !to || from.row === to.row) return;
+    [[from, to], [to, from]].forEach(([node, other]) => {
+      const key = `${node.id}:${other.row > node.row ? 'bottom' : 'top'}`;
+      verticalPorts.set(key, (verticalPorts.get(key) ?? 0) + 1);
+    });
+  });
+  function mobileLongPort(node: typeof positions[number], edgeIndex: number) {
+    const connections = longConnections.filter(edge => edge.from === node.id || edge.to === node.id);
+    const rank = connections.findIndex(edge => edge.edgeIndex === edgeIndex);
+    const fraction = connections.length > 1 ? .25 + .5 * rank / (connections.length - 1) : .5;
+    return node.y + height * fraction;
+  }
+  const edges = architecture.edges.flatMap((edge, index) => {
+    const from = positionById.get(edge.from);
+    const to = positionById.get(edge.to);
+    if (!from || !to) return [];
+    let path: string;
+    let labelX: number;
+    let labelY: number;
+    let labelLimit = 17;
+    let anchor: 'start' | 'middle' = 'middle';
+    if (mobile) {
+      const fromIndex = positions.indexOf(from);
+      const toIndex = positions.indexOf(to);
+      if (Math.abs(fromIndex - toIndex) === 1) {
+        const down = to.y > from.y;
+        const startY = down ? from.y + height : from.y;
+        const endY = down ? to.y : to.y + height;
+        path = `M 160 ${startY} V ${endY}`;
+        labelX = 174;
+        labelY = mobileLabelY.get(index) ?? (startY + endY) / 2;
+        labelLimit = 18;
+        anchor = 'start';
+      } else {
+        // Long connections use the outer rail instead of crossing other nodes.
+        const railIndex = longConnections.findIndex(connection => connection.edgeIndex === index);
+        const rail = 8 + 20 * railIndex / Math.max(2, longConnections.length - 1);
+        path = `M ${from.x} ${mobileLongPort(from, index)} H ${rail} V ${mobileLongPort(to, index)} H ${to.x}`;
+        labelX = 32;
+        labelY = mobileLabelY.get(index) ?? Math.min(from.y, to.y) + height + 46;
+        labelLimit = 17;
+        anchor = 'start';
+      }
+    } else if (from.row === to.row) {
+      const right = to.x > from.x;
+      const startX = right ? from.x + width : from.x;
+      const endX = right ? to.x : to.x + width;
+      const centerY = from.y + height / 2;
+      if (Math.abs(from.column - to.column) === 1) {
+        path = `M ${startX} ${centerY} H ${endX}`;
+        labelX = (startX + endX) / 2;
+        labelY = centerY - 20;
+        labelLimit = 15;
+      } else {
+        const railY = from.y - 28 - (index % 2) * 12;
+        path = `M ${startX} ${centerY} h ${right ? 20 : -20} V ${railY} H ${endX + (right ? -20 : 20)} V ${centerY} H ${endX}`;
+        labelX = (startX + endX) / 2;
+        labelY = railY - 14;
+        labelLimit = 24;
+      }
+    } else if (from.column === to.column) {
+      const down = to.y > from.y;
+      const startY = down ? from.y + height : from.y;
+      const endY = down ? to.y : to.y + height;
+      const centerX = from.x + width / 2;
+      if (Math.abs(from.row - to.row) === 1) {
+        path = `M ${centerX} ${startY} V ${endY}`;
+        labelX = centerX + 12;
+        labelY = (startY + endY) / 2;
+        anchor = 'start';
+        labelLimit = 24;
+      } else {
+        const railX = from.x + width + 30 + (index % 2) * 10;
+        path = `M ${from.x + width} ${from.y + height / 2} H ${railX} V ${to.y + height / 2} H ${to.x + width}`;
+        labelX = railX + 10;
+        labelY = (startY + endY) / 2;
+        anchor = 'start';
+      }
+    } else {
+      // A diagonal connection uses the row gap, keeping side ports distinct
+      // from the horizontal flow into the same destination.
+      const down = to.y > from.y;
+      const startX = from.x + width / 2;
+      const endX = to.x + width / 2;
+      const startY = down ? from.y + height : from.y;
+      const endY = down ? to.y : to.y + height;
+      const railY = (startY + endY) / 2;
+      const sharedPort = (verticalPorts.get(`${from.id}:${down ? 'bottom' : 'top'}`) ?? 0) > 1 || (verticalPorts.get(`${to.id}:${down ? 'top' : 'bottom'}`) ?? 0) > 1;
+      if (sharedPort && Math.abs(from.column - to.column) === 1) {
+        // Branches get separate side ports; they must not merge into a
+        // vertical connection that happens to use the same row gap.
+        const right = to.x > from.x;
+        const startSideX = right ? from.x + width : from.x;
+        const endSideX = right ? to.x : to.x + width;
+        const railX = (startSideX + endSideX) / 2;
+        const sourceY = from.y + height * (down ? .72 : .28);
+        const targetY = to.y + height * (down ? .28 : .72);
+        path = `M ${startSideX} ${sourceY} H ${railX} V ${targetY} H ${endSideX}`;
+        labelX = railX + 12;
+        labelY = railY;
+        labelLimit = 20;
+        anchor = 'start';
+      } else {
+        path = `M ${startX} ${startY} V ${railY} H ${endX} V ${endY}`;
+        labelX = (startX + endX) / 2;
+        labelY = railY - 18;
+        labelLimit = 24;
+      }
+    }
+    const copy = lines(edge.label, labelLimit);
+    const labelWidth = Math.max(20, ...copy.map((line) => line.length * 6.1 + 12));
+    return [{ ...edge, path, labelX, labelY, anchor, copy, labelWidth, labelHeight: copy.length * 15 + 8 }];
+  });
+  const groups = (architecture.groups ?? []).flatMap((group) => {
+    const members = positions.filter((node) => node.group === group.id);
+    if (!members.length) return [];
+    const left = Math.min(...members.map((node) => node.x)) - 12;
+    const top = Math.min(...members.map((node) => node.y)) - 43;
+    const right = Math.max(...members.map((node) => node.x + width)) + 12;
+    const bottom = Math.max(...members.map((node) => node.y + height)) + 14;
+    return [{ ...group, x: left, y: top, width: right - left, height: bottom - top, copy: lines(group.label, Math.floor((right - left - 24) / 6.4)) }];
+  });
+  const viewWidth = mobile ? 320 : Math.max(
+    positions.length ? 0 : 500,
+    ...positions.map((node) => node.x + width + 48),
+    ...edges.map((edge) => edge.labelX + (edge.anchor === 'middle' ? edge.labelWidth / 2 : edge.labelWidth) + 16),
+  );
+  const viewHeight = Math.max(200, ...positions.map((node) => node.y + height + 36));
+  return { name: mobile ? 'mobile' : 'desktop', positions, edges, groups, width: viewWidth, height: viewHeight };
+}
+
+const views = [makeView(false), makeView(true)];
+const description = `${architecture.caption} ${architecture.nodes.map((node) => `${node.label}: ${node.role}. ${node.technology}.`).join(' ')} Conexiones: ${architecture.edges.map((edge) => `${architecture.nodes.find((node) => node.id === edge.from)?.label ?? edge.from} ${edge.bidirectional ? 'hacia y desde' : 'hacia'} ${architecture.nodes.find((node) => node.id === edge.to)?.label ?? edge.to}: ${edge.label}`).join('; ')}.`;
+---
+
+<div class="architecture-map">
+  {views.map((view) => {
+    const svgId = `${safeId}-${view.name}`;
+    return (
+      <svg
+        class={`architecture-map__${view.name}`}
+        viewBox={`0 0 ${view.width} ${view.height}`}
+        width={view.width}
+        height={view.height}
+        role="img"
+        aria-labelledby={`${svgId}-title ${svgId}-description`}
+      >
+        <title id={`${svgId}-title`}>{architecture.title}</title>
+        <desc id={`${svgId}-description`}>{description}</desc>
+        <defs>
+          <marker id={`${svgId}-arrow`} viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+            <path d="M 1 1 L 7 4 L 1 7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </marker>
+        </defs>
+        {view.groups.map((group) => (
+          <g class="architecture-map__group">
+            <rect x={group.x} y={group.y} width={group.width} height={group.height} rx="2" />
+            {view.name !== 'mobile' && <text x={group.x + 12} y={group.y + 17}>
+              {group.copy.map((line, index) => <tspan x={group.x + 12} dy={index ? 14 : 0}>{line}</tspan>)}
+            </text>}
+          </g>
+        ))}
+        {view.edges.map((edge) => (
+          <g class="architecture-map__edge">
+            <path d={edge.path} marker-end={`url(#${svgId}-arrow)`} marker-start={edge.bidirectional ? `url(#${svgId}-arrow)` : undefined} />
+            <rect x={edge.anchor === 'middle' ? edge.labelX - edge.labelWidth / 2 : edge.labelX - 6} y={edge.labelY - edge.labelHeight / 2} width={edge.labelWidth} height={edge.labelHeight} />
+            <text x={edge.labelX} y={edge.labelY - (edge.copy.length - 1) * 7.5 + 4} text-anchor={edge.anchor}>
+              {edge.copy.map((line, index) => <tspan x={edge.labelX} dy={index ? 15 : 0}>{line}</tspan>)}
+            </text>
+          </g>
+        ))}
+        {view.name === 'mobile' && view.groups.map(group => (
+          <g class="architecture-map__group architecture-map__group-heading">
+            <rect x={group.x + 1} y={group.y + 1} width={group.width - 2} height={Math.max(32, group.copy.length * 14 + 10)} />
+            <text x={group.x + 12} y={group.y + 17}>
+              {group.copy.map((line, index) => <tspan x={group.x + 12} dy={index ? 14 : 0}>{line}</tspan>)}
+            </text>
+          </g>
+        ))}
+        {view.positions.map((node) => (
+          <g class={`architecture-map__node architecture-map__node--${node.kind}`} transform={`translate(${node.x} ${node.y})`}>
+            <rect class="architecture-map__node-paper" width={node.width} height={node.height} rx="2" />
+            {node.kind === 'custom' && <path class="architecture-map__custom-rule" d={`M 0 0 V ${node.height}`} />}
+            <text class="architecture-map__node-title" x="18" y="28">
+              {node.copy.title.map((line, index) => <tspan x="18" dy={index ? 20 : 0}>{line}</tspan>)}
+            </text>
+            <text class="architecture-map__node-role" x="18" y={node.copy.roleY}>
+              {node.copy.role.map((line, index) => <tspan x="18" dy={index ? node.copy.roleLineHeight : 0}>{line}</tspan>)}
+            </text>
+            <text class="architecture-map__node-technology" x="18" y={node.copy.technologyY}>
+              {node.copy.technology.map((line, index) => <tspan x="18" dy={index ? node.copy.technologyLineHeight : 0}>{line}</tspan>)}
+            </text>
+          </g>
+        ))}
+      </svg>
+    );
+  })}
+  <ul class="architecture-map__legend" aria-label="Leyenda del mapa">
+    {kinds.filter(({ kind }) => architecture.nodes.some((node) => node.kind === kind)).map(({ kind, label }) => (
+      <li><span class={`architecture-map__swatch architecture-map__swatch--${kind}`} aria-hidden="true"></span>{label}</li>
+    ))}
+  </ul>
+</div>
+
+<style>
+  .architecture-map { width: 100%; color: var(--ink, #252320); }
+  .architecture-map svg { width: 100%; height: auto; overflow: visible; font-family: var(--serif, Georgia, serif); }
+  .architecture-map__mobile { display: none; }
+  .architecture-map__group > rect { fill: var(--paper-deep, #ebe4d6); fill-opacity: .45; stroke: var(--hairline, #c5bdae); stroke-width: 1; }
+  .architecture-map__group > text { fill: var(--muted, #6c665e); font-size: 11px; font-weight: 600; letter-spacing: .03em; }
+  .architecture-map__group-heading > rect { fill: var(--paper-deep, #ebe4d6); fill-opacity: 1; stroke: none; }
+  .architecture-map__edge > path { fill: none; stroke: currentColor; stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; }
+  .architecture-map__edge > rect { fill: var(--paper, #f5f0e6); }
+  .architecture-map__edge > text { fill: var(--muted, #6c665e); font-size: 12px; }
+  .architecture-map__node-paper { fill: var(--paper, #f5f0e6); stroke: currentColor; stroke-width: 1.5; }
+  .architecture-map__node--platform .architecture-map__node-paper { fill: var(--paper-deep, #ebe4d6); stroke-dasharray: 1 3; stroke-linecap: round; }
+  .architecture-map__node--external .architecture-map__node-paper { stroke: var(--muted, #6c665e); stroke-dasharray: 6 4; }
+  .architecture-map__custom-rule { stroke: var(--coral, #c55c45); stroke-width: 3; }
+  .architecture-map__node-title { fill: var(--ink, #252320); font-size: 17px; font-weight: 650; }
+  .architecture-map__node-role { fill: var(--muted, #6c665e); font-size: 14px; }
+  .architecture-map__node-technology { fill: var(--coral, #c55c45); font-size: 12px; font-weight: 600; }
+  .architecture-map__mobile .architecture-map__node-role { font-size: 15px; }
+  .architecture-map__mobile .architecture-map__node-technology { font-size: 14px; }
+  .architecture-map__legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 9px 24px; margin: 8px 0 0; padding: 14px 4px 4px; list-style: none; border-top: 1px solid var(--hairline, #c5bdae); }
+  .architecture-map__legend li { display: flex; align-items: center; gap: 8px; color: var(--muted, #6c665e); font-size: 12px; line-height: 1.5; }
+  .architecture-map__swatch { display: inline-block; width: 24px; height: 14px; border: 1.5px solid var(--ink, #252320); }
+  .architecture-map__swatch--custom { border-left: 3px solid var(--coral, #c55c45); }
+  .architecture-map__swatch--platform { background: var(--paper-deep, #ebe4d6); border-style: dotted; }
+  .architecture-map__swatch--external { border-style: dashed; border-color: var(--muted, #6c665e); }
+  @media (max-width: 900px) {
+    .architecture-map__desktop { display: none; }
+    .architecture-map__mobile { display: block; max-width: 420px; margin-inline: auto; }
+    .architecture-map__legend { gap: 8px 16px; justify-content: flex-start; }
+  }
+</style>

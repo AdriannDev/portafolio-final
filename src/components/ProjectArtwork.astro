@@ -1,0 +1,30 @@
+---
+interface Props { index: number; }
+const { index } = Astro.props;
+---
+<div class:list={['project-artwork', `project-artwork--${index}`]} aria-label="Imagen del proyecto pendiente">
+  <span class="artwork-register">Proyecto en preparación</span>
+  <svg viewBox="0 0 480 240" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true" focusable="false">
+    {index === 1 && <g>
+      <path d="M80 120h80m70 0h80m-115-55v25m0 60v25" stroke-dasharray="3 5" />
+      <rect x="28" y="92" width="70" height="56" /><rect x="160" y="90" width="70" height="60" /><rect x="310" y="92" width="130" height="56" />
+      <rect x="160" y="30" width="70" height="35" /><rect x="160" y="175" width="70" height="35" />
+      <path d="m55 112-8 8 8 8m15-16 8 8-8 8m111-19-10 11 10 11m28-22 10 11-10 11M334 109h65m-65 10h89m-89 10h51" />
+      <circle cx="195" cy="47" r="5" /><circle cx="195" cy="192" r="5" />
+    </g>}
+    {index === 2 && <g>
+      <rect x="55" y="27" width="370" height="185" /><path d="M55 54h370M83 77h84m-84 14h124m-124 14h62m-62 14h113m-113 14h80m-80 14h110m-110 14h55" />
+      <circle cx="69" cy="40" r="2" /><circle cx="80" cy="40" r="2" /><circle cx="91" cy="40" r="2" />
+      <path d="m292 92-24 28 24 28m50-56 24 28-24 28m-18-68-15 81" stroke-width="2" /><path d="M244 182h150" stroke-dasharray="2 5" />
+    </g>}
+    {index === 3 && <g>
+      <ellipse cx="240" cy="58" rx="64" ry="21" /><path d="M176 58v113c0 28 128 28 128 0V58M176 94c0 28 128 28 128 0m-128 39c0 28 128 28 128 0" />
+      <path d="M99 80h44m-44 0v80h44m194-80h44m0 0v80h-44" stroke-dasharray="3 5" /><circle cx="88" cy="80" r="11" /><circle cx="88" cy="160" r="11" /><circle cx="392" cy="80" r="11" /><circle cx="392" cy="160" r="11" />
+    </g>}
+    {index === 4 && <g>
+      <rect x="65" y="32" width="350" height="177" /><path d="M65 61h350M65 92h350M65 123h350M65 154h350M65 185h350M115 61v148M263 61v148M348 61v148" />
+      <path d="M80 47h56m-8 30h70m-70 31h90m-90 31h65m-65 31h78m74-93h38m-38 31h24m-24 31h44m-44 31h29M366 77h30m-30 31h30m-30 31h30m-30 31h30" />
+    </g>}
+  </svg>
+  <span class="artwork-caption">Imagen del proyecto · pendiente</span>
+</div>

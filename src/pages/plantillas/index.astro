@@ -1,0 +1,25 @@
+---
+import Newspaper from '../../layouts/Newspaper.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import TemplateScene from '../../components/project-details/TemplateScene.astro';
+import { templateStudies, templateLabels } from '../../data/project-details';
+import { Image } from 'astro:assets';
+import '../../styles/project-details.css';
+---
+<Newspaper title="Templates de proyectos · Adrian Dev" description="Cuatro formas de presentar el desarrollo, la arquitectura y los componentes de un proyecto." noIndex>
+  <SiteHeader />
+  <main id="contenido" class="template-index">
+    <div class="case-breadcrumb"><a href="/proyectos/">← Volver a proyectos</a><span class="eyebrow">Biblioteca editorial</span></div>
+    <span class="eyebrow">Cuatro formas de contar una solución</span><h1>Detalles con<br/>perspectiva<span class="coral">.</span></h1>
+    <p class="template-index__intro">Una base editorial compartida. Explora cómo se construyó cada solución: proceso, arquitectura, componentes y decisiones técnicas.</p>
+    <p class="case-notice"><span>Vistas de plantilla</span>ANDEC y EVOX aportan referencias reales. Las variantes de aplicación y API ilustran la estructura para futuros casos.</p>
+    <div class="template-index__grid">{templateStudies.map((study,index) => <a class="template-index__card" href={`/plantillas/${study.slug}/`}>
+      <div class="template-index__card-meta"><span>0{index+1}</span><span>{study.mode === 'reference' ? `Referencia ${study.projectId === 'evox' ? 'EVOX' : 'ANDEC'}` : 'Ejemplo ilustrativo'}</span></div>
+      <h2>{templateLabels[study.template]}</h2>
+      <div class="template-index__art">{study.image ? <Image src={study.image.src} alt={study.image.alt} width={800} loading="lazy" format="webp" /> : <TemplateScene template={study.template} />}</div>
+      <p>{study.objective}</p><span class="template-index__open">Explorar template <span aria-hidden="true">↗</span></span>
+    </a>)}</div>
+  </main>
+  <SiteFooter />
+</Newspaper>

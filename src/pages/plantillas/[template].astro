@@ -1,0 +1,9 @@
+---
+import { templateStudies } from '../../data/project-details';
+import ProjectDetails from '../../components/project-details/ProjectDetails.astro';
+export function getStaticPaths() {
+  return templateStudies.map(study => ({ params: { template: study.slug }, props: { study } }));
+}
+const { study } = Astro.props;
+---
+<ProjectDetails study={study} preview />

@@ -1,0 +1,125 @@
+---
+import { Image } from 'astro:assets';
+import type { Project } from '../data/portfolio';
+import Action from './Action.astro';
+import ProjectArtwork from './ProjectArtwork.astro';
+interface Props { project: Project; index: number; }
+const { project, index } = Astro.props;
+const isFreelance = project.kind === 'freelance';
+const visitUrl = isFreelance ? project.siteUrl : project.demoUrl;
+---
+<article class="project-card" aria-labelledby={`${project.id}-title`}>
+  <div class="project-card__paper"></div>
+  <div class="project-card__body">
+    <div class="project-card__meta"><span>{project.category}</span><span>{project.date ?? (project.siteUrl ? 'En línea' : 'Fecha por definir')}</span></div>
+    <h3 id={`${project.id}-title`}>{project.title}</h3>
+    <div class="project-card__image">
+      {project.image ? <Image src={project.image.src} alt={project.image.alt} widths={[400, 640, 960]} sizes="(max-width: 760px) 90vw, 45vw" loading="lazy" format="webp" /> : <ProjectArtwork index={index} />}
+    </div>
+    <p class="project-card__description">{project.summary}</p>
+    <ul class="tag-list project-card__tags" aria-label="Tecnologías del proyecto">
+      {project.technologies.length ? project.technologies.map(technology => <li class="tag">{technology}</li>) : <li class="tag tag--pending">Stack por definir</li>}
+    </ul>
+    <div class="project-card__footer">
+      <Action href={visitUrl} label={isFreelance ? 'Visitar página' : 'Ver demo'} pendingLabel={isFreelance ? 'Página pendiente' : 'Demo pendiente'} variant="solid" icon="arrow" />
+      {project.detailsUrl ? <a href={project.detailsUrl} class="project-details" aria-label={`Más detalles de ${project.title}`}><span>Más detalles</span><span aria-hidden="true">↗</span></a> : <span class="project-details project-details--pending"><span>Más detalles</span><small>En preparación</small></span>}
+    </div>
+  </div>
+  <div class="page-corner" aria-hidden="true">
+    <span class="page-corner__leaf">
+      <svg class="page-corner__face page-corner__front" viewBox="0 0 80 80" focusable="false">
+        <path d="M.5 79.5 79.5 .5V72Q79.5 79.5 72 79.5Z" />
+      </svg>
+      <svg class="page-corner__face page-corner__reverse" viewBox="0 0 80 80" focusable="false">
+        <path d="M79.5.5C57 2 34 6 12 5Q4 4 5 12C6 34 2 57 .5 79.5Z" />
+        <path class="page-corner__rim" d="M76 2.5C54 4 32 8 12 7Q6 6 7 12C8 32 4 54 2.5 76" />
+        <path class="page-corner__crease" d="m4 76 72-72" />
+      </svg>
+    </span>
+  </div>
+</article>
+
+<style>
+  /*
+   * The card stops at the diagonal. A separate two-sided sheet supplies its
+   * missing corner and turns around that same diagonal, without a shadow tile.
+   */
+  .page-corner {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: var(--fold);
+    height: var(--fold);
+    perspective: 480px;
+    perspective-origin: 50% 50%;
+    pointer-events: none;
+  }
+
+  .page-corner__leaf {
+    position: absolute;
+    inset: 0;
+    transform-origin: 50% 50%;
+    transform-style: preserve-3d;
+    transform: rotate3d(1, -1, 0, -8deg);
+    /* This decorative paper turn is deliberately slower than button feedback. */
+    transition: transform 720ms var(--ease-in-out);
+  }
+
+  .page-corner__face {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    backface-visibility: hidden;
+    transform-origin: 50% 50%;
+    stroke: var(--rule);
+    stroke-width: .8;
+    stroke-linejoin: round;
+  }
+
+  .page-corner__front {
+    fill: var(--paper);
+  }
+
+  .page-corner__reverse {
+    fill: #faf7f0;
+    transform: rotate3d(1, -1, 0, 180deg);
+  }
+
+  .page-corner__crease {
+    fill: none;
+    stroke: var(--hairline);
+    stroke-width: .5;
+  }
+
+  .page-corner__rim {
+    fill: none;
+    stroke: var(--paper);
+    stroke-width: 1;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .project-card:hover .page-corner__leaf {
+      transform: rotate3d(1, -1, 0, -152deg);
+    }
+  }
+
+  .project-card:focus-within .page-corner__leaf {
+    transform: rotate3d(1, -1, 0, -152deg);
+  }
+
+  /* Keep the turned corner visible even when motion is unavailable. */
+  :global(html[data-motion-state='paused']) .page-corner__leaf,
+  :global(html[data-motion-state='reduced']) .page-corner__leaf {
+    transform: rotate3d(1, -1, 0, -180deg) !important;
+    transition: none;
+  }
+
+  @media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+    .project-card .page-corner__leaf {
+      transform: rotate3d(1, -1, 0, -180deg) !important;
+      transition: none;
+    }
+  }
+</style>

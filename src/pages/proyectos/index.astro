@@ -1,0 +1,37 @@
+---
+import Newspaper from '../../layouts/Newspaper.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { publishedProjects } from '../../data/portfolio';
+---
+<Newspaper title="Proyectos · Adrian Dev" description="Proyectos de desarrollo freelance: sitios corporativos y ecommerce. Explora las páginas publicadas, su stack y los casos disponibles.">
+  <SiteHeader />
+  <main id="contenido" class="projects-index">
+    <div class="projects-index__heading">
+      <div><span class="eyebrow">Archivo de proyectos</span><h1>Proyectos<span class="coral">.</span></h1></div>
+      <p>Webs corporativas, comercio electrónico y soluciones a medida. Cada proyecto, con su stack y resultado publicado.</p>
+    </div>
+    <div class="projects-index__edition"><span>Proyectos publicados</span><span>Diseño, desarrollo y soluciones</span></div>
+    <section aria-labelledby="all-projects-title">
+      <h2 id="all-projects-title" class="sr-only">Todos los proyectos</h2>
+      <div class="project-grid">{publishedProjects.map((project, index) => <ProjectCard project={project} index={index+1} />)}</div>
+    </section>
+  </main>
+  <SiteFooter />
+</Newspaper>
+
+<style>
+  .projects-index { min-width: 0; padding: 35px 0 45px; }
+  .projects-index__heading { display: grid; grid-template-columns: 1fr 1fr; gap: 35px; align-items: end; padding-bottom: 28px; }
+  h1 { font-family: var(--display); font-size: clamp(46px, 7vw, 78px); font-weight: 500; letter-spacing: -.05em; line-height: 1.15; margin-top: 12px; }
+  .projects-index__heading p { max-width: 48ch; font-size: 17px; line-height: 1.6; }
+  .projects-index__edition { display: flex; justify-content: space-between; gap: 18px; border-block: 4px double var(--rule); padding: 12px 0; margin-bottom: 30px; color: var(--muted); font-size: 11px; }
+  @media (max-width: 600px) {
+    .projects-index { padding-top: 28px; }
+    .projects-index__heading { grid-template-columns: 1fr; gap: 18px; }
+    .projects-index__heading p { font-size: 16px; }
+    .projects-index__edition { align-items: baseline; font-size: 10px; }
+    .projects-index__edition > :last-child { text-align: right; }
+  }
+</style>

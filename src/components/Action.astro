@@ -1,0 +1,25 @@
+---
+import Icon, { type IconName } from './Icon.astro';
+interface Props {
+  href?: string;
+  label: string;
+  pendingLabel?: string;
+  variant?: 'solid' | 'outline' | 'text';
+  icon?: IconName;
+  download?: boolean;
+  class?: string;
+}
+const { href, label, pendingLabel, variant = 'outline', icon, download = false, class: className } = Astro.props;
+const isExternal = href?.startsWith('https://') || href?.startsWith('http://');
+const classes = ['action', `action--${variant}`, className];
+---
+{href ? (
+  <a class:list={classes} href={href} target={isExternal ? '_blank' : undefined} rel={isExternal ? 'noopener noreferrer' : undefined} download={download || undefined}>
+    <span>{label}</span>{icon && <Icon name={icon} size={16} />}
+    {isExternal && <span class="sr-only"> (abre en una pestaña nueva)</span>}
+  </a>
+) : (
+  <button class:list={[...classes, 'is-unavailable']} type="button" disabled>
+    <span>{pendingLabel ?? label}</span>{icon && <Icon name={icon} size={16} />}
+  </button>
+)}

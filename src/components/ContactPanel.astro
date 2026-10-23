@@ -1,0 +1,29 @@
+---
+import { profile } from '../data/portfolio';
+import Icon, { type IconName } from './Icon.astro';
+import Action from './Action.astro';
+import Octocat from './Octocat.astro';
+const items: { label: string; detail: string; href?: string; icon: IconName }[] = [
+  { label: profile.email ?? 'Correo por añadir', detail: 'Correo electrónico', href: profile.email ? `mailto:${profile.email}` : undefined, icon: 'mail' },
+  { label: 'LinkedIn', detail: profile.linkedinUrl ? 'Perfil profesional' : 'Enlace pendiente', href: profile.linkedinUrl, icon: 'linkedin' },
+  { label: 'GitHub', detail: profile.githubUrl ? 'Código y proyectos' : 'Enlace pendiente', href: profile.githubUrl, icon: 'github' },
+  { label: 'WhatsApp', detail: 'Enviar un mensaje', href: profile.whatsappUrl, icon: 'whatsapp' },
+];
+---
+<aside class="contact-panel" aria-labelledby="contact-panel-title">
+  <h2 id="contact-panel-title">Información y contacto</h2>
+  <div class="contact-panel__links">
+    {items.map(item => item.href ? (
+      <a class="contact-row" href={item.href} target={item.icon !== 'mail' ? '_blank' : undefined} rel={item.icon !== 'mail' ? 'noopener noreferrer' : undefined}>
+        <span class="social-icon"><Icon name={item.icon} size={22} /></span><span><span class="contact-row__name">{item.label}</span><small>{item.detail}</small></span><Icon name="arrow" size={13} />
+        {item.icon !== 'mail' && <span class="sr-only">Abre en una pestaña nueva</span>}
+      </a>
+    ) : (
+      <div class="contact-row contact-row--pending"><span class="social-icon"><Icon name={item.icon} size={22} /></span><span><span class="contact-row__name">{item.label}</span><small>{item.detail}</small></span></div>
+    ))}
+  </div>
+  <div class="contact-panel__cv-scene">
+    <Octocat />
+    <Action class="contact-panel__cv" href={profile.cvUrl} label="Descargar CV" pendingLabel="CV pendiente" download icon="download" />
+  </div>
+</aside>

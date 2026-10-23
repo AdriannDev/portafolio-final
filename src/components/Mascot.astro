@@ -1,0 +1,16 @@
+---
+interface Props { variant: 'walking' | 'watching'; }
+const { variant } = Astro.props;
+---
+<span class:list={['mascot-scene', `mascot-scene--${variant}`]} data-motion>
+  <span class="mascot-travel">
+    <svg class="pixel-mascot" viewBox="0 0 64 48" width="64" height="48" fill="currentColor" aria-hidden="true" focusable="false" shape-rendering="crispEdges">
+      <g class="mascot-body">
+        <path d="M12 4h40v8h8v12h-8v12H12V24H4V12h8V4Z" />
+        <g class="mascot-eyes" fill="var(--ink)"><path d="M20 10h5v6h-5zM39 10h5v6h-5z" /></g>
+      </g>
+      <g class="mascot-feet mascot-feet--a"><path d="M13 32h6v13h-6zM33 32h6v13h-6z" /></g>
+      <g class="mascot-feet mascot-feet--b"><path d="M23 32h6v13h-6zM43 32h6v13h-6z" /></g>
+    </svg>
+  </span>
+</span>

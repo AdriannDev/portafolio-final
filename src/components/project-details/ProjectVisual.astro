@@ -1,0 +1,28 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  caption?: string;
+  class?: string;
+}
+
+const { id, title, caption, class: className } = Astro.props;
+---
+
+<figure id={id} class:list={['project-visual', className]}>
+  <div class="project-visual__content">
+    <slot />
+  </div>
+  <figcaption class="project-visual__caption">
+    <strong>{title}</strong>
+    {caption && <span>{caption}</span>}
+  </figcaption>
+</figure>
+
+<style>
+  .project-visual { min-width: 0; }
+  .project-visual__content { min-width: 0; }
+  .project-visual__caption { display: grid; gap: 4px; min-width: 0; padding-top: 12px; font-size: 13px; line-height: 1.5; }
+  .project-visual__caption strong { font-weight: 600; }
+  .project-visual__caption > span { color: var(--muted); font-size: 12px; max-width: 72ch; }
+</style>

@@ -1,0 +1,39 @@
+---
+import type { ImplementationModule } from '../../types/project-details';
+interface Props { modules: ImplementationModule[]; example?: boolean; }
+const { modules, example = false } = Astro.props;
+---
+<div class="implementation-modules">
+  {modules.map(module => <article class:list={['implementation-module', { 'implementation-module--custom': module.kind === 'custom' }]}>
+    <span class="eyebrow">{module.kind === 'custom' ? (example ? 'Capa de aplicación' : 'Desarrollo propio') : 'Base tecnológica'}{example && ' · Ejemplo'}</span>
+    <h3>{module.name}</h3>
+    <p>{module.responsibility}</p>
+    <ul class="tag-list" aria-label={`Tecnologías de ${module.name}`}>{module.technologies.map(technology => <li class="tag">{technology}</li>)}</ul>
+    {module.sources?.length && <div class="implementation-module__source"><span>{example ? 'Estructura ilustrativa' : 'En el código'}</span>{module.sources.map(source => <code>{source}</code>)}</div>}
+    <div class="implementation-module__connections"><span>Se integra con</span><ul>{module.connections.map(connection => <li>{connection}</li>)}</ul></div>
+  </article>)}
+</div>
+
+<style>
+  .implementation-modules { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+  .implementation-module { min-width: 0; border: 1px dashed var(--rule); padding: 22px; display: flex; flex-direction: column; }
+  .implementation-module--custom { border-style: solid; border-top: 2px solid var(--coral); box-shadow: var(--small-shadow); }
+  .implementation-module > .eyebrow { color: var(--muted); font-size: 9px; }
+  .implementation-module--custom > .eyebrow { color: #95442f; }
+  h3 { font-family: var(--display); font-size: 27px; font-weight: 500; line-height: 1.25; letter-spacing: -.025em; margin: 12px 0; }
+  p { font-size: 15px; line-height: 1.55; margin-bottom: 17px; max-width: 50ch; }
+  .tag-list { gap: 7px; margin-bottom: 20px; }
+  .tag { font-size: 11px; min-height: 26px; padding: 4px 9px; }
+  .implementation-module__source { display: grid; gap: 5px; padding-top: 15px; border-top: 1px solid var(--hairline); margin-top: auto; }
+  .implementation-module__source > span, .implementation-module__connections > span { font-size: 9px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+  code { display: block; font-family: ui-monospace, Consolas, monospace; font-size: 11px; line-height: 1.6; overflow-wrap: anywhere; }
+  .implementation-module__connections { padding-top: 16px; }
+  .implementation-module__connections ul { display: flex; flex-wrap: wrap; gap: 5px 12px; margin-top: 7px; }
+  .implementation-module__connections li { font-size: 12px; line-height: 1.5; }
+  .implementation-module__connections li::before { content: '↗'; margin-right: 5px; color: #95442f; }
+  @media (max-width: 600px) {
+    .implementation-modules { grid-template-columns: 1fr; gap: 19px; }
+    .implementation-module { padding: 18px; }
+    h3 { font-size: 26px; }
+  }
+</style>

@@ -1,0 +1,81 @@
+---
+import Newspaper from '../layouts/Newspaper.astro';
+import { profile, publication, projects, experience, education, toolGroups, softSkills } from '../data/portfolio';
+import Action from '../components/Action.astro';
+import Portrait from '../components/Portrait.astro';
+import ContactPanel from '../components/ContactPanel.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import Mascot from '../components/Mascot.astro';
+import Star from '../components/Star.astro';
+import JavaMark from '../components/JavaMark.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+---
+<Newspaper>
+  <div id="inicio" aria-hidden="true"></div>
+  <SiteHeader home />
+
+  <main id="contenido">
+    <section class="hero" aria-labelledby="hero-heading" data-nav-section="inicio">
+      <article class="intro-panel">
+        <div class="intro-panel__byline"><span>{profile.role}</span><span class="location"><span aria-hidden="true">◦</span> {profile.location}</span></div>
+        <h1 class="sr-only" id="hero-heading">{profile.name ? `${profile.name}, desarrollador backend junior` : 'Ingeniero de software · Desarrollador backend junior'}</h1>
+        <div class="intro-panel__content">
+          <div class="intro-copy"><p class="intro-copy__lead">{profile.introduction}</p><p class="intro-copy__support">{profile.supportingText}</p></div>
+          <Portrait image={profile.portrait} />
+        </div>
+      </article>
+      <ContactPanel />
+    </section>
+    <div class="mascot-divider" aria-hidden="true"><Mascot variant="walking" /></div>
+
+    <section class="projects-section" id="proyectos" aria-labelledby="projects-heading" data-nav-section>
+      <div class="section-heading"><div><span class="eyebrow">Una selección de mi trabajo</span><h2 id="projects-heading">Proyectos</h2></div><Star /></div>
+      <div class="project-grid">{projects.map((project, index) => <ProjectCard project={project} index={index + 1} />)}</div>
+      <div class="projects-all"><Action href={publication.projectsUrl} label="Ver todos los proyectos" variant="text" icon="arrow" /></div>
+    </section>
+
+    <section class="experience-section" id="experiencia" aria-labelledby="experience-heading" data-nav-section>
+      <article class="experience-panel">
+        <span class="eyebrow">Aprender construyendo</span>
+        <h2 id="experience-heading">Experiencia</h2>
+        <h3>{experience.title}</h3><p class="experience-panel__period">{experience.period}</p>
+        <ul class="experience-list">{experience.entries.map(entry => <li>{entry}</li>)}</ul>
+        <section class="education-block" aria-labelledby="education-heading">
+          <h3 id="education-heading">Formación</h3>
+          <p class="education-block__program">{education.program}</p>
+          <p class="education-block__institution">{education.institution}</p>
+          <p class="education-block__period">{education.period} <span aria-hidden="true">·</span> {education.status}</p>
+        </section>
+        <div class="experience-panel__mascot" aria-hidden="true"><Mascot variant="watching" /></div>
+      </article>
+      <div class="tools-panel">
+        <div class="tools-heading"><h2>Herramientas</h2><JavaMark /></div>
+        <div class="tool-groups">{toolGroups.map(group => <section class="tool-group" aria-label={group.title}>
+          <h3><span>{group.numeral}</span> {group.title}</h3>
+          <ul class="tag-list">{group.items.length ? group.items.map(item => <li class="tag">{item}</li>) : Array.from({ length: group.pendingSlots }, (_, index) => <li class="tag tag--pending">Herramienta {index + 1}</li>)}</ul>
+          {!group.items.length && <p class="group-pending">Listado por completar</p>}
+        </section>)}</div>
+        <section class="soft-skills" aria-labelledby="soft-skills-heading"><h2 id="soft-skills-heading">Soft Skills</h2><ul class="tag-list">{softSkills.length ? softSkills.map(skill => <li class="tag">{skill}</li>) : Array.from({ length: 5 }, (_, index) => <li class="tag tag--pending">Habilidad {index + 1}</li>)}</ul>{!softSkills.length && <p class="group-pending">Listado por completar</p>}</section>
+      </div>
+    </section>
+
+    <section class="contact-section" id="contacto" aria-labelledby="contact-heading" data-nav-section>
+      <div class="contact-section__intro"><span class="eyebrow">Correspondencia</span><h2 id="contact-heading">Contacto</h2><p class="contact-headline">Conversemos sobre software y oportunidades <em>backend.</em></p><span class="contact-location">{profile.location} <span aria-hidden="true">·</span> {profile.role}</span></div>
+      <div class="contact-section__actions">
+        <div class="email-line"><span class="eyebrow">Correo electrónico</span><p>{profile.email ?? 'Tu correo, aquí.'}</p>{!profile.email && <span class="pending-note">Dirección pendiente de añadir</span>}</div>
+        <div class="contact-actions">
+          <Action href={profile.whatsappUrl} label="Escríbeme" pendingLabel="WhatsApp pendiente" variant="solid" icon="whatsapp" />
+          <Action href={profile.cvUrl} label="Descargar CV" pendingLabel="CV pendiente" variant="outline" icon="download" download />
+        </div>
+        <nav class="contact-socials" aria-label="Redes sociales">
+          <Action href={profile.linkedinUrl} label="LinkedIn" variant="text" icon="linkedin" />
+          <Action href={profile.githubUrl} label="GitHub" variant="text" icon="github" />
+          <Action href={profile.xUrl} label="X" variant="text" icon="x" />
+        </nav>
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter backHref="#inicio" />
+</Newspaper>

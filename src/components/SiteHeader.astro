@@ -1,0 +1,17 @@
+---
+import { profile, publication } from '../data/portfolio';
+interface Props { home?: boolean; active?: string; }
+const { home = false, active = 'proyectos' } = Astro.props;
+const navigation = [
+  { id: 'inicio', label: 'Inicio' }, { id: 'proyectos', label: 'Proyectos' },
+  { id: 'experiencia', label: 'Experiencia' }, { id: 'contacto', label: 'Contacto' },
+];
+---
+<header class:list={['masthead', { 'masthead--compact': !home }]} data-sticky-header>
+  <div class="edition-line"><time datetime={publication.dateISO}>{publication.date}</time><span>{publication.edition}</span><span>{publication.volume}</span></div>
+  <p class="masthead__name">{publication.title}<span class="masthead__punctuation">;</span></p>
+  {profile.name && <p class="masthead__author">La edición de {profile.name}</p>}
+  <nav class="main-nav" aria-label="Navegación principal">
+    {navigation.map(item => <a href={!home && item.id === 'proyectos' ? '/proyectos/' : `${home ? '' : '/'}#${item.id}`} data-nav-link={item.id} aria-current={item.id === (home ? 'inicio' : active) ? (home ? 'location' : 'page') : undefined}>{item.label}</a>)}
+  </nav>
+</header>

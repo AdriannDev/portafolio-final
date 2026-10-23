@@ -1,0 +1,7 @@
+---
+import { publication } from '../data/portfolio';
+import Icon from './Icon.astro';
+interface Props { backHref?: string; backLabel?: string; }
+const { backHref = '/#inicio', backLabel = 'Volver al inicio' } = Astro.props;
+---
+<footer class="footer"><div class="footer__signature"><span>{publication.title}<span class="coral">;</span></span><small>{publication.edition} <span aria-hidden="true">/</span> {publication.volume}</small></div><div class="footer__controls"><button class="motion-toggle" data-motion-toggle type="button" aria-pressed="false" hidden><span class="motion-status" aria-hidden="true"></span><span data-motion-label>Pausar animaciones</span></button><a class="back-top" href={backHref}>{backLabel} <Icon name="up" size={15} /></a></div></footer>
