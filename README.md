@@ -71,7 +71,7 @@ Abre la dirección que imprima Astro, normalmente `http://127.0.0.1:4321/`. Si e
 5. **Casos de proyectos:** crear cuatro variantes con una estructura común y documentar ANDEC, EVOX y Tenso a partir de sus fuentes y pantallas publicadas. Los mapas separan componentes propios, plataformas y servicios externos.
 6. **Revisión:** comprobar composición responsive, teclado, enlaces, estructura de las fichas y compilación. La [validación](VALIDATION.md) distingue comprobaciones ejecutadas de pendientes.
 
-Los detalles priorizan diagramas, capturas y explicaciones breves. Las figuras se presentan directamente en la página, sin ampliación ni visores. Las tarjetas mantienen el doblez decorativo y un enlace horizontal legible a «Más detalles».
+Los detalles priorizan el proceso, los diagramas de arquitectura, las responsabilidades de los módulos y sus archivos de código. Cada proyecto conserva una única imagen en el hero; el producto completo se explora mediante su enlace. No se incluyen galerías de pantallas ni visores. Las tarjetas mantienen el doblez decorativo y un enlace horizontal legible a «Más detalles».
 
 ## Organización y mantenimiento
 
@@ -93,6 +93,7 @@ docs/                     Documentación de desarrollo y mantenimiento
 
 - [Arquitectura](docs/architecture.md): generación estática, componentes, datos y JavaScript del navegador.
 - [Guía de contenido](docs/content-guide.md): editar el perfil, añadir proyectos y preparar diagramas y evidencias.
+- [Pendientes de documentación](docs/project-documentation.md): información concreta que falta confirmar en cada fase marcada «Por documentar».
 - [Desarrollo y diseño](docs/development.md): decisiones, animaciones, accesibilidad y revisión manual.
 - [GitHub y publicación](docs/github-and-deployment.md): repositorio, commits, CI y configuración del alojamiento.
 - [Validación actual](VALIDATION.md): alcance y resultados de las comprobaciones.

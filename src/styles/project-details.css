@@ -43,17 +43,7 @@
 .process-artifact--2 li { border: 1px solid var(--hairline); background: var(--paper); padding: 4px 6px; }
 .process-artifact--2 li::before { display: none; }
 .process-artifact--3 li { font-family: ui-monospace, Consolas, monospace; font-size: 10px; }
-.process-artifact__empty { display: flex; align-items: center; gap: 9px; color: var(--muted); font-size: 11px; }
-.process-artifact__empty > :first-child { font-size: 23px; }
-.evidence-status { display: block; color: var(--muted); font-size: 10px; margin-top: auto; padding-top: 17px; }
-.evidence-status[data-status='verified'] { color: #45614b; }
-.process-stage .process-stage__source { margin-top: 7px; color: var(--muted); font-size: 10px; line-height: 1.5; }
-.case-implementation-gallery { margin-top: 32px; }
-.case-implementation-gallery > h3 { font-family: var(--display); font-size: 27px; font-weight: 500; letter-spacing: -.025em; margin-bottom: 20px; }
-.case-gallery { display: grid; grid-template-columns: minmax(0, 1fr) minmax(150px, .38fr); gap: 25px; margin-top: 28px; align-items: start; }
-.case-gallery img { width: 100%; height: auto; border: 1px solid var(--hairline); }
-.case-gallery__mobile { max-width: 230px; justify-self: center; }
-.case-gallery--wide { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.process-status { display: block; color: var(--muted); font-size: 10px; margin-top: auto; padding-top: 17px; }
 .case-decisions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 23px; }
 .case-decisions article { border-top: 3px double var(--rule); padding: 18px 0 0; min-width: 0; }
 .case-decisions article > .eyebrow { color: #a44432; font-size: 9px; }
@@ -158,14 +148,11 @@
   .process-stage:last-child::after { display: none; }
   .process-stage h3 { font-size: 26px; }
   .process-stage > p { font-size: 14px; }
-  .process-stage .process-stage__source { font-size: 11px; }
   .process-artifact li { font-size: 12px; }
   .process-artifact--3 li { font-size: 11px; }
-  .evidence-status { font-size: 11px; }
+  .process-status { font-size: 11px; }
   .case-decisions { grid-template-columns: 1fr; }
   .case-decisions dd { font-size: 15px; }
-  .case-gallery { grid-template-columns: 1fr; }
-  .case-gallery__mobile { max-width: 220px; }
   .case-closing p { font-size: 23px; }
   .template-index h1 { font-size: 43px; }
   .template-index__intro { font-size: 16px; }

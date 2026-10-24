@@ -29,7 +29,7 @@ const imagen = {
 };
 ```
 
-Asigna esta estructura a `profile.portrait`, `project.image` o `study.image`. La galería añade `caption` y, opcionalmente, `layout: 'mobile'` o `'wide'`.
+Asigna esta estructura a `profile.portrait`, `project.image` o `study.image`. Las fichas muestran únicamente la imagen del hero; no añadas galerías de pantallas. Los diagramas y módulos explican el desarrollo.
 
 El retrato utilizado es `foto-perfil-sin-fondo.png`. Conserva su canal alfa al sustituirlo para mantener la integración con el papel. El JPEG original se conserva localmente, está excluido de Git y no es necesario para compilar. No vincules documentación o contenido público a `artifacts/`, que tampoco forma parte del repositorio.
 
@@ -65,13 +65,13 @@ Utiliza `ProjectCaseStudy` de `src/types/project-details.ts`. Para un nuevo caso
 
 1. Define un `projectId` único que coincida con la tarjeta y su URL `/proyectos/<projectId>/`.
 2. Usa `mode: 'reference'` para trabajo real. Reserva `'example'` para contenido ilustrativo.
-3. Completa título, objetivo, rol, alcance, tecnologías y aviso de las evidencias disponibles.
-4. Prepara las cuatro fases de `process`. Usa `verified`, `pending` o `example` según la evidencia; `artifact` admite etiquetas breves.
+3. Completa título, objetivo, rol, alcance y tecnologías. `notice` se muestra solo en los ejemplos ilustrativos.
+4. Prepara las cuatro fases de `process`. Usa `verified`, `pending` o `example` según lo documentado; `artifact` admite piezas breves del desarrollo. `evidence` es una anotación interna y no aparece en la página.
 5. Describe `architecture`, `modules` y, cuando aporten información, `decisions`.
-6. Añade capturas y destinos reales. Las acciones de página, demo, documentación y repositorio solo aparecen cuando su URL está definida.
+6. Añade la imagen de portada y destinos reales. Las acciones de página, demo, documentación y repositorio solo aparecen cuando su URL está definida.
 7. Compila y verifica la ruta, sus enlaces y el mapa en los tres anchos de referencia.
 
-No marques una fase como verificada solo para eliminar `noindex`. Los templates siempre llevan `noindex`; las referencias con fases pendientes también. Al completar las evidencias, revisa el aviso editorial y las expectativas de metadatos del verificador, que actualmente comprueba los casos en preparación.
+No marques una fase como verificada solo para eliminar `noindex`. Los templates siempre llevan `noindex`; las referencias con fases pendientes también. Al completar la documentación, revisa las expectativas de metadatos del verificador, que actualmente comprueba los casos en preparación. Consulta [qué falta por proyecto](project-documentation.md): no se exige Figma, capturas adicionales ni un brief formal si el proceso se puede describir con precisión.
 
 ## Nodos y conexiones
 

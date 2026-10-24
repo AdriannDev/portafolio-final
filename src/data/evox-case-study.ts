@@ -1,7 +1,5 @@
 import { evoxModules } from './project-modules';
 import evoxPreview from '../assets/projects/evox.webp';
-import evoxProduct from '../assets/projects/evox-producto.webp';
-import evoxShipping from '../assets/projects/evox-envio.webp';
 import type { ProjectCaseStudy } from '../types/project-details';
 
 /**
@@ -26,32 +24,18 @@ export const evoxCaseStudy: ProjectCaseStudy = {
     alt: 'Portada de EVOX con su catálogo de mobiliario y productos de ergonomía',
   },
   siteUrl: 'https://evox.com.pe/',
-  gallery: [
-    {
-      src: evoxProduct,
-      alt: 'Ficha de producto publicada en EVOX con galería, información y opciones de compra',
-      caption: 'Ficha real del producto: la presentación combina Bricks, datos de WooCommerce y componentes de EVOX Core.',
-      layout: 'wide',
-    },
-    {
-      src: evoxShipping,
-      alt: 'Consulta de envío de EVOX con selección de departamento, provincia y distrito',
-      caption: 'Consulta de envío publicada. EVOX Core utiliza UBIGEO para consultar cobertura y tarifas; la captura no envía un pedido.',
-      layout: 'wide',
-    },
-  ],
   process: [
     {
       title: 'Definición',
-      caption: 'El alcance implementado reúne catálogo, compra y entrega en Perú. El brief original está por incorporar.',
+      caption: 'El alcance reúne catálogo, compra y entrega en Perú, con funcionalidades a medida sobre WooCommerce.',
       evidence: 'Alcance visible en los módulos',
       status: 'pending',
       artifact: ['Productos y variantes', 'Carrito', 'Entrega y recojo'],
     },
     {
       title: 'Diseño',
-      caption: 'Bricks compone las vistas; los componentes propios conectan producto, carrito y checkout. Faltan los prototipos originales.',
-      evidence: 'Interfaz publicada · Prototipos pendientes',
+      caption: 'Bricks compone las plantillas; los componentes propios conectan producto, carrito y checkout.',
+      evidence: 'Criterios de diseño y separación entre plataforma y personalización por confirmar con el autor',
       status: 'pending',
       artifact: ['Ficha de producto', 'Carrito lateral', 'Checkout'],
     },
@@ -72,7 +56,6 @@ export const evoxCaseStudy: ProjectCaseStudy = {
   ],
   architecture: {
     title: 'WooCommerce como motor; plugins propios como extensión',
-    caption: 'Bricks presenta la tienda. EVOX Core y Shop the Look añaden componentes, hooks y endpoints AJAX; productos, carrito y pedidos siguen usando WooCommerce.',
     groups: [{ id: 'wordpress-runtime', label: 'Servidor de tienda · WordPress / PHP' }],
     nodes: [
       { id: 'customer', label: 'Comprador', role: 'Explorar y realizar la compra', technology: 'Navegador · JavaScript', kind: 'external', column: 0, row: 0 },

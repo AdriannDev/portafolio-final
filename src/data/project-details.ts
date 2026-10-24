@@ -2,8 +2,6 @@ import { andecModules, webAppModules, backendModules } from './project-modules';
 import { evoxCaseStudy } from './evox-case-study';
 import { tensoCaseStudy } from './tenso-case-study';
 import andecPreview from '../assets/projects/andec.webp';
-import andecMobile from '../assets/projects/andec-mobile.webp';
-import andecQuote from '../assets/projects/andec-cotizacion.webp';
 import type { ProjectCaseStudy, ProjectTemplate } from '../types/project-details';
 
 export const templateLabels: Record<ProjectTemplate, string> = {
@@ -35,24 +33,20 @@ export const templateStudies: ProjectCaseStudy[] = [
       alt: 'Portada de ANDEC Coberturas con sus servicios de coberturas industriales',
     },
     siteUrl: 'https://andeccoberturas.com/',
-    gallery: [
-      { src: andecQuote, alt: 'Formulario de cotización de ANDEC', caption: 'Pantalla del formulario publicado; se capturó sin enviar datos.', layout: 'wide' },
-      { src: andecMobile, alt: 'Portada de ANDEC en móvil', caption: 'Vista real a 390 px. Esta captura no sustituye una auditoría responsive completa.', layout: 'mobile' },
-    ],
     process: [
       {
         title: 'Definición',
-        caption: 'El sitio reúne servicios, productos y proyectos. Falta incorporar el brief inicial del cliente.',
+        caption: 'El alcance reúne servicios, productos y proyectos, con cotización y contacto directo.',
         evidence: 'Requerimientos iniciales pendientes',
         status: 'pending',
         artifact: ['Servicios', 'Productos', 'Proyectos'],
       },
       {
         title: 'Diseño',
-        caption: 'La navegación actual es visible; los bocetos y la validación del diseño todavía no están documentados.',
-        evidence: 'Prototipos originales por incorporar',
+        caption: 'Un layout compartido y componentes Astro organizan la navegación, las tarjetas y los bloques de contenido.',
+        evidence: 'Criterios iniciales de estructura y decisiones de diseño por confirmar con el autor',
         status: 'pending',
-        artifact: ['Inicio', 'Servicios', 'Contacto'],
+        artifact: ['Layout compartido', 'Componentes Astro', 'Navegación'],
       },
       {
         title: 'Construcción',
@@ -70,8 +64,7 @@ export const templateStudies: ProjectCaseStudy[] = [
       },
     ],
     architecture: {
-      title: 'Contenido estático con un formulario propio',
-      caption: 'Mapa contrastado con las fuentes locales. Hostinger aloja los archivos generados y el endpoint PHP; Astro no se ejecuta al visitar la web.',
+      title: 'Arquitectura de ANDEC Coberturas',
       groups: [{ id: 'hostinger', label: 'Alojamiento · Hostinger' }],
       nodes: [
         { id: 'content', label: 'Contenido', role: 'Servicios, productos y proyectos', technology: 'MDX · TypeScript', kind: 'custom', column: 0, row: 0 },
@@ -114,7 +107,6 @@ export const templateStudies: ProjectCaseStudy[] = [
     ],
     architecture: {
       title: 'La interfaz inicia; el backend resuelve',
-      caption: 'Arquitectura ilustrativa de una aplicación de tareas. El contenedor agrupa las capas que se ejecutan en el backend.',
       groups: [{ id: 'app-server', label: 'Servidor de aplicación · Ejemplo' }],
       nodes: [
         { id: 'ui', label: 'Interfaz web', role: 'Capturar acciones y mostrar estados', technology: 'HTML · CSS · TypeScript', kind: 'custom', column: 0, row: 0 },
@@ -155,7 +147,6 @@ export const templateStudies: ProjectCaseStudy[] = [
     ],
     architecture: {
       title: 'Capas de aplicación, persistencia y caché',
-      caption: 'Ejemplo de arquitectura: el servidor ejecuta controlador, servicio y repositorio. PostgreSQL conserva los datos; Redis complementa las consultas con caché.',
       groups: [{ id: 'api-server', label: 'Servidor de la API · Ejemplo' }],
       nodes: [
         { id: 'consumer', label: 'Consumidor', role: 'Enviar una operación HTTP', technology: 'Cliente HTTP', kind: 'external', column: 0, row: 0 },

@@ -216,7 +216,7 @@ function makeView(mobile: boolean) {
 }
 
 const views = [makeView(false), makeView(true)];
-const description = `${architecture.caption} ${architecture.nodes.map((node) => `${node.label}: ${node.role}. ${node.technology}.`).join(' ')} Conexiones: ${architecture.edges.map((edge) => `${architecture.nodes.find((node) => node.id === edge.from)?.label ?? edge.from} ${edge.bidirectional ? 'hacia y desde' : 'hacia'} ${architecture.nodes.find((node) => node.id === edge.to)?.label ?? edge.to}: ${edge.label}`).join('; ')}.`;
+const description = `${architecture.nodes.map((node) => `${node.label}: ${node.role}. ${node.technology}.`).join(' ')} Conexiones: ${architecture.edges.map((edge) => `${architecture.nodes.find((node) => node.id === edge.from)?.label ?? edge.from} ${edge.bidirectional ? 'hacia y desde' : 'hacia'} ${architecture.nodes.find((node) => node.id === edge.to)?.label ?? edge.to}: ${edge.label}`).join('; ')}.`;
 ---
 
 <div class="architecture-map">
@@ -229,9 +229,9 @@ const description = `${architecture.caption} ${architecture.nodes.map((node) => 
         width={view.width}
         height={view.height}
         role="img"
-        aria-labelledby={`${svgId}-title ${svgId}-description`}
+        aria-label={architecture.title}
+        aria-describedby={`${svgId}-description`}
       >
-        <title id={`${svgId}-title`}>{architecture.title}</title>
         <desc id={`${svgId}-description`}>{description}</desc>
         <defs>
           <marker id={`${svgId}-arrow`} viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse">

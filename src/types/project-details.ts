@@ -16,7 +16,6 @@ export interface ArchitectureEdge { from: string; to: string; label: string; bid
 export interface ArchitectureGroup { id: string; label: string; }
 export interface Architecture {
   title: string;
-  caption: string;
   nodes: ArchitectureNode[];
   edges: ArchitectureEdge[];
   groups?: ArchitectureGroup[];
@@ -24,6 +23,7 @@ export interface Architecture {
 export interface ProcessStage {
   title: string;
   caption: string;
+  /** Internal documentation record; not displayed in the public timeline. */
   evidence: string;
   status: 'verified' | 'pending' | 'example';
   artifact?: string[];
@@ -50,7 +50,6 @@ export interface ProjectCaseStudy {
   technologies: string[];
   notice: string;
   image?: PortfolioImage;
-  gallery?: (PortfolioImage & { caption: string; layout?: 'wide' | 'mobile' })[];
   siteUrl?: string;
   demoUrl?: string;
   repositoryUrl?: string;

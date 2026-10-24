@@ -1,6 +1,4 @@
 import tensoPreview from '../assets/projects/tenso.webp';
-import tensoGallery from '../assets/projects/tenso-galeria.webp';
-import tensoMobile from '../assets/projects/tenso-movil.webp';
 import type { ProjectCaseStudy } from '../types/project-details';
 
 /** Based on the local Tenso Lonas Perú source, not an inferred technology stack. */
@@ -18,10 +16,6 @@ export const tensoCaseStudy: ProjectCaseStudy = {
   notice: 'Arquitectura y componentes contrastados con las fuentes del proyecto. La configuración activa del alojamiento y la entrega del correo no se han comprobado para esta ficha.',
   image: { src: tensoPreview, alt: 'Portada de Tenso Lonas Perú con su presentación de coberturas industriales' },
   siteUrl: 'https://tensolonasperu.com/',
-  gallery: [
-    { src: tensoGallery, alt: 'Galería publicada de una obra en la web de Tenso Lonas Perú', caption: 'El componente de galería combina una imagen principal y miniaturas a partir del contenido de la obra.', layout: 'wide' },
-    { src: tensoMobile, alt: 'Portada móvil del sitio de Tenso Lonas Perú', caption: 'Vista publicada a 390 px: navegación compacta y presentación de servicios.', layout: 'mobile' },
-  ],
   process: [
     {
       title: 'Definición',
@@ -46,7 +40,7 @@ export const tensoCaseStudy: ProjectCaseStudy = {
     },
     {
       title: 'Integración',
-      caption: 'El formulario conecta con PHP, Turnstile y SMTP. La configuración productiva de estos servicios queda por confirmar.',
+      caption: 'El formulario envía los datos al endpoint PHP, que valida Turnstile y tramita la solicitud por SMTP.',
       evidence: 'Integración presente en el código · Configuración pendiente',
       status: 'pending',
       artifact: ['POST a PHP', 'Turnstile', 'Correo SMTP'],
@@ -54,7 +48,6 @@ export const tensoCaseStudy: ProjectCaseStudy = {
   ],
   architecture: {
     title: 'Páginas generadas y cotización mediante PHP',
-    caption: 'Astro se ejecuta al compilar, no al visitar la página. El código prepara un endpoint PHP con Turnstile y SMTP; el mapa no atribuye un proveedor de alojamiento activo.',
     groups: [{ id: 'web-runtime', label: 'Entorno web con soporte PHP' }],
     nodes: [
       { id: 'content', label: 'Contenido tipado', role: 'Definir servicios y proyectos', technology: 'Markdown · Zod', kind: 'custom', column: 0, row: 0 },

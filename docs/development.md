@@ -10,10 +10,12 @@ El objetivo es presentar el perfil y explicar el desarrollo de cada proyecto med
 | TypeScript estricto | Contratos compartidos entre datos, tarjetas, casos y diagramas |
 | CSS y SVG | Ilustraciones y transiciones controlables sin dependencias de animación |
 | Datos separados | Actualizar el perfil o un proyecto sin duplicar la estructura visual |
-| Figuras en la página | Mapas y capturas legibles sin visores ni ampliación |
+| Desarrollo como contenido | Mapas, responsabilidades y archivos; una sola imagen de producto en el hero |
 | Evidencias identificadas | Diferenciar trabajos reales, fases pendientes y ejemplos de arquitectura |
 
 El portafolio utiliza CSS propio. Tailwind CSS, WordPress y WooCommerce aparecen como habilidades y tecnologías de otros proyectos, no como herramientas de construcción de esta web.
+
+Las fichas no incluyen galerías de pantallas, etiquetas de evidencia disponible ni pies de auditoría. Los mapas no generan tooltips nativos, pero conservan su nombre y descripción accesibles. Los pendientes documentales se mantienen separados de las funcionalidades implementadas: véase [pendientes por proyecto](project-documentation.md).
 
 ## Sistema editorial
 

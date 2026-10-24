@@ -1,6 +1,16 @@
 # Validación del portafolio
 
-Este registro describe la versión actual y separa las comprobaciones automáticas de las revisiones visuales anteriores. Fecha de preparación para GitHub: **22 de octubre de 2026**.
+Este registro describe la versión actual y separa las comprobaciones automáticas de las revisiones visuales anteriores. Última revisión: **23 de octubre de 2026**.
+
+## Fichas centradas en desarrollo · 23 de octubre
+
+- Retiradas las galerías de los tres casos y sus variantes de plantilla. Cada ficha real muestra una sola imagen en el hero; implementación conserva módulos, responsabilidades, tecnologías, archivos y conexiones.
+- Eliminadas las etiquetas de evidencia disponible, los pies de auditoría y los avisos de revisión en los casos reales. Las fases pendientes conservan «Por documentar»; su información necesaria se explica en [pendientes por proyecto](docs/project-documentation.md).
+- Los mapas ya no incluyen títulos SVG que disparen tooltips ni pies con explicaciones de comprobación de fuentes. Conservan nombre y descripción accesibles mediante ARIA y `<desc>`.
+- `npm run validate`: diagnóstico de 39 archivos sin errores, advertencias ni sugerencias; build de 11 páginas y 25 variantes de imagen; diez rutas verificadas correctamente.
+- Revisión en navegador de siete fichas a 360, 768 y 1440 px: 21 vistas sin desbordamiento horizontal ni imágenes rotas, sin galerías ni textos de evidencia disponible. Los mapas mantienen sus descripciones accesibles y no contienen títulos nativos de hover.
+- Comprobada la navegación a las anclas de proceso y arquitectura. La pestaña de revisión no registró errores de consola.
+- Registros y capturas locales: `artifacts/project-details-development-review.json`, `project-process-clean.png` y `project-architecture-clean.png`. Los cambios aún no se han publicado en GitHub.
 
 ## Comprobación reproducible
 
@@ -21,7 +31,9 @@ npm run validate
 | Casos y templates | Tres casos reales, cuatro variantes, ejemplos identificados y `noindex` en vistas/borradores |
 | Interfaz generada | Sin controles de ampliación, secciones retiradas ni numeración de las tarjetas |
 
-Se ejecutó la cadena sobre una exportación limpia de las fuentes preparadas para Git, fuera del directorio de trabajo y sin depender de sus archivos locales excluidos. Entorno: Windows, Node.js 24.19.0 y npm 11.17.0.
+### Preparación inicial de GitHub · 22 de octubre
+
+Se ejecutó la cadena sobre una exportación limpia de las fuentes preparadas para Git, fuera del directorio de trabajo y sin depender de sus archivos locales excluidos. Entorno: Windows, Node.js 24.19.0 y npm 11.17.0. Los siguientes resultados corresponden a esa versión, anterior a la retirada de galerías:
 
 - `npm ci`: instalación correcta; la auditoría de npm informó cero vulnerabilidades en esa ejecución.
 - `npm run check`: 38 archivos, cero errores, advertencias y sugerencias.

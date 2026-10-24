@@ -2,18 +2,16 @@
 import type { ProcessStage } from '../../types/project-details';
 interface Props { stages: ProcessStage[]; }
 const { stages } = Astro.props;
-const statusLabel = { verified: 'Evidencia disponible', pending: 'Por documentar', example: 'Ejemplo ilustrativo' };
 ---
 <ol class="process-timeline" aria-label="Etapas del desarrollo">
   {stages.map((stage, index) => <li class:list={['process-stage', `process-stage--${stage.status}`]}>
     <div class="process-stage__top"><span class="eyebrow">Fase {String(index + 1).padStart(2, '0')}</span><span aria-hidden="true">↗</span></div>
     <h3>{stage.title}</h3>
-    <div class:list={['process-artifact', `process-artifact--${index + 1}`]} aria-label={stage.evidence}>
+    <div class:list={['process-artifact', `process-artifact--${index + 1}`]}>
       <span class="process-artifact__register" aria-hidden="true">{['OBJETIVO', 'ESTRUCTURA', 'CONSTRUCCIÓN', 'INTEGRACIÓN'][index]}</span>
-      {stage.artifact?.length ? <ul>{stage.artifact.map(item => <li>{item}</li>)}</ul> : <div class="process-artifact__empty"><span aria-hidden="true">＋</span><span>Evidencia por incorporar</span></div>}
+      {stage.artifact?.length && <ul>{stage.artifact.map(item => <li>{item}</li>)}</ul>}
     </div>
     <p>{stage.caption}</p>
-    <small class="evidence-status" data-status={stage.status}><span aria-hidden="true">{stage.status === 'verified' ? '✓' : stage.status === 'example' ? '◇' : '○'}</span> {statusLabel[stage.status]}</small>
-    <p class="process-stage__source">{stage.evidence}</p>
+    {stage.status === 'pending' && <small class="process-status">Por documentar</small>}
   </li>)}
 </ol>

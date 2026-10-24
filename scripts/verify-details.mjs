@@ -26,6 +26,18 @@ for (const route of routes) {
     assert.match(html, /id="arquitectura"/u);
     assert.match(html, /id="implementacion"/u);
     assert(!/id="funcionamiento"|id="validacion"|Funcionamiento clave|Validación y resultado/u.test(html), `${route}: details focus on development`);
+    assert(!/Pantallas implementadas|case-gallery|case-implementation-gallery|Evidencia disponible|process-stage__source/u.test(html), `${route}: no product galleries or evidence footers`);
+    assert(!/Contenido estático con un formulario propio|Mapa contrastado con las fuentes locales|Hostinger aloja los archivos generados/u.test(html), `${route}: no architecture audit copy`);
+    const illustrative = route === '/plantillas/aplicacion-web/' || route === '/plantillas/backend/';
+    assert.equal((html.match(/<img(?:\s|>)/gu) ?? []).length, illustrative ? 0 : 1, `${route}: keep only the hero project image`);
+    const architectureViews = [...html.matchAll(/<svg\b(?=[^>]*class="architecture-map__)[^>]*>[\s\S]*?<\/svg>/gu)].map(match => match[0]);
+    assert.equal(architectureViews.length, 2, `${route}: desktop and mobile maps`);
+    for (const svg of architectureViews) {
+      assert(!/<title\b|\stitle=/u.test(svg), `${route}: no native map tooltip`);
+      assert.match(svg, /aria-label="[^"]+"/u, `${route}: map keeps an accessible name`);
+      const descriptionId = svg.match(/aria-describedby="([^"]+)"/u)?.[1];
+      assert(descriptionId && svg.includes(`id="${descriptionId}"`), `${route}: accessible map description exists`);
+    }
   }
   for (const match of html.matchAll(/<a\s[^>]*href="([^"]+)"[^>]*>/gu)) {
     const href = match[1].replaceAll('&amp;', '&');

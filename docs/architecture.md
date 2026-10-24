@@ -46,13 +46,14 @@ Las tecnologías PHP, WooCommerce, PostgreSQL o Redis que aparecen en las fichas
 
 `ProjectDetails.astro` compone la portada y estos bloques:
 
-1. `ProcessTimeline`: definición, diseño, construcción e integración con evidencia y estado.
-2. `ArchitectureMap` dentro de `ProjectVisual`: conexiones reales y responsabilidad de los componentes.
+1. `ProcessTimeline`: definición, diseño, construcción e integración con una descripción breve y piezas del desarrollo.
+2. `ArchitectureMap`: conexiones reales y responsabilidad de los componentes, sin pie de auditoría ni texto emergente.
 3. `ImplementationModules`: desarrollo propio frente a base tecnológica, archivos y dependencias.
-4. Galería opcional de pantallas implementadas.
-5. Decisiones técnicas opcionales: necesidad, elección y efecto.
+4. Decisiones técnicas opcionales: necesidad, elección y efecto.
 
-`ProjectVisual.astro` es una figura estática con pie. No carga un visor ni captura interacciones.
+`ProjectVisual.astro` presenta únicamente el visual del hero. No hay galerías adicionales. Los mapas mantienen un nombre accesible con `aria-label` y una descripción de sus nodos y conexiones con `aria-describedby` y `<desc>`; no utilizan `<title>` de SVG para evitar el tooltip nativo.
+
+`ProcessStage.evidence` conserva el registro interno de documentación, pero no se renderiza. Solo las fases pendientes muestran «Por documentar». Su detalle está en [pendientes de documentación](project-documentation.md). Los avisos de ejemplo se conservan para las dos variantes ilustrativas; las fichas reales no muestran avisos de auditoría del código.
 
 ### Mapas de arquitectura
 
