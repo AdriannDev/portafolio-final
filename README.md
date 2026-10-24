@@ -1,108 +1,46 @@
 # Adrian Dev;
 
-Portafolio personal de ingeniería de software con enfoque backend. Presenta mi perfil, experiencia, formación y proyectos freelance mediante una interfaz inspirada en un periódico: papel marfil, tipografía editorial, recuadros, separadores y acentos coral.
+Portafolio personal de ingeniería de software con enfoque backend. Un espacio para presentar mi perfil, experiencia y proyectos, y explicar las decisiones y el trabajo técnico que hay detrás de cada solución.
 
-Construido con **Astro, TypeScript y CSS**, con contenido tipado, imágenes optimizadas y animaciones SVG. Se genera como un sitio estático; no requiere una base de datos ni un servidor de aplicación.
+El diseño está inspirado en un periódico vintage: papel marfil, tipografía editorial, recuadros, separadores y acentos coral. La marca **Adrian Dev;** conecta esa identidad con el desarrollo de software.
 
-## Contenido de la página
+El portafolio está construido con **Astro, TypeScript y CSS**, contenido tipado, imágenes optimizadas y animaciones SVG. Se genera como un sitio estático, con JavaScript para mejorar la navegación y controlar el movimiento.
 
-- **Inicio:** presentación profesional, retrato a color con transparencia, ubicación y accesos de contacto.
-- **Proyectos:** tres trabajos freelance y un espacio identificado para un futuro proyecto personal. El listado independiente muestra los tres trabajos con destino disponible.
-- **Experiencia y formación:** desarrollo independiente y estudios de Ingeniería de Software en la Universidad Tecnológica del Perú, desde 2021.
-- **Herramientas y habilidades:** tecnologías de backend y frontend, herramientas de IA y habilidades interpersonales.
-- **Contacto:** WhatsApp, correo, LinkedIn, GitHub, X y acceso al CV cuando se incorpore el archivo.
-- **Detalles de proyectos:** proceso de desarrollo, mapa de arquitectura, componentes implementados y decisiones técnicas.
+## Contenido del portafolio
 
-La marca inicial del diseño fue «Daily Post»; algunos identificadores internos conservan ese nombre. La cabecera y el pie muestran «Adrian Dev;».
+- **Presentación:** perfil profesional, especialización backend, retrato y ubicación.
+- **Proyectos:** una selección de trabajos y una página independiente para explorar los proyectos disponibles.
+- **Experiencia y formación:** desarrollo independiente y estudios de Ingeniería de Software en la Universidad Tecnológica del Perú.
+- **Herramientas y habilidades:** tecnologías de backend y frontend, herramientas de apoyo y habilidades interpersonales.
+- **Contacto:** correo, WhatsApp, LinkedIn, GitHub, X y acceso al CV cuando esté disponible.
+- **Detalles técnicos:** proceso de desarrollo, arquitectura y conexiones, módulos implementados y decisiones técnicas.
 
-## Proyectos documentados
+Las fichas se centran en **cómo se desarrolló cada proyecto**. Incluyen una imagen de portada y el enlace al sitio publicado para explorar el resultado completo.
 
-| Proyecto | Tipo | Tecnologías del proyecto |
+## Proyectos
+
+| Proyecto | Solución | Tecnologías principales |
 | --- | --- | --- |
-| [ANDEC Coberturas](https://andeccoberturas.com/) | Web corporativa | Astro, TypeScript, Tailwind CSS, MDX y PHP |
-| [EVOX](https://evox.com.pe/) | Ecommerce | WordPress, WooCommerce, Bricks, PHP, JavaScript y CSS |
-| [Tenso Lonas Perú](https://tensolonasperu.com/) | Web corporativa | Astro, TypeScript, Tailwind CSS, Markdown y PHP |
+| [ANDEC Coberturas](https://andeccoberturas.com/) | Primera presencia web del negocio, servicios, catálogo y solicitudes de cotización | Astro, TypeScript, Tailwind CSS, MDX y PHP |
+| [EVOX](https://evox.com.pe/) | Modernización de un ecommerce con componentes y plugins propios para catálogo, compra y entrega | WordPress, WooCommerce, Bricks, PHP, JavaScript y CSS |
+| [Tenso Lonas Perú](https://tensolonasperu.com/) | Web de servicios y proyectos con contenido tipado, enfoque SEO y formulario de cotización | Astro, TypeScript, Tailwind CSS, Markdown y PHP |
 
-Las fichas distinguen el desarrollo propio de las funciones de cada plataforma. Las variantes de aplicación web y API son ejemplos ilustrativos para futuros casos; no representan trabajos adicionales. Las tecnologías de esta tabla pertenecen a los proyectos presentados: para ejecutar **este portafolio** basta con Node.js.
-
-## Ejecutar localmente
-
-Requisitos: **Node.js 22.22 o superior** y npm. El entorno de referencia y la integración continua utilizan Node.js 24, indicado en `.nvmrc`.
-
-```sh
-npm ci
-npm run dev
-```
-
-Abre la dirección que imprima Astro, normalmente `http://127.0.0.1:4321/`. Si el puerto está ocupado, se utilizará otro. No se necesitan variables de entorno ni credenciales para compilar el portafolio.
-
-| Comando | Uso |
-| --- | --- |
-| `npm run dev` | Servidor de desarrollo local |
-| `npm run check` | Diagnóstico de Astro y TypeScript |
-| `npm run build` | Generar el sitio estático en `dist/` |
-| `npm run verify:details` | Verificar rutas, enlaces internos, estructura y metadatos sobre `dist/` |
-| `npm run validate` | Ejecutar diagnóstico, compilación y verificación en ese orden |
-| `npm run preview` | Revisar la compilación localmente |
-| `npm run assets` | Regenerar `public/og-image.png` con Sharp |
-
-## Rutas
-
-| Ruta | Contenido |
-| --- | --- |
-| `/` | Portada y secciones principales |
-| `/proyectos/` | Listado de proyectos |
-| `/proyectos/andec-coberturas/` | Detalles de ANDEC |
-| `/proyectos/evox/` | Detalles de EVOX |
-| `/proyectos/tenso-lonas-peru/` | Detalles de Tenso Lonas Perú |
-| `/plantillas/` | Catálogo de las cuatro variantes editoriales |
-| `/plantillas/estatica/` | Referencia de sitio web: ANDEC |
-| `/plantillas/ecommerce/` | Referencia de ecommerce: EVOX |
-| `/plantillas/aplicacion-web/` | Ejemplo de aplicación con backend |
-| `/plantillas/backend/` | Ejemplo de API y servicios de datos |
-| `/404.html` | Página de error para el alojamiento estático |
+En cada ficha se diferencia el desarrollo propio de las funciones aportadas por las plataformas e integraciones. El espacio reservado al proyecto personal se identifica como pendiente.
 
 ## Proceso de desarrollo
 
-1. **Definición visual:** partir de los mockups del periódico y mantener su composición, jerarquía y orden de lectura.
-2. **Sistema editorial:** trasladar el diseño a variables CSS, fuentes locales, paneles reutilizables y distribuciones adaptables a móvil, tablet y escritorio.
-3. **Contenido y componentes:** separar los datos de la presentación, compartir tarjetas entre inicio y listado, y habilitar acciones solo cuando existe su destino.
-4. **Movimiento progresivo:** construir las ilustraciones con SVG y CSS; añadir pausa global, detección de visibilidad y respeto por el movimiento reducido.
-5. **Casos de proyectos:** crear cuatro variantes con una estructura común y documentar ANDEC, EVOX y Tenso a partir de sus fuentes y pantallas publicadas. Los mapas separan componentes propios, plataformas y servicios externos.
-6. **Revisión:** comprobar composición responsive, teclado, enlaces, estructura de las fichas y compilación. La [validación](VALIDATION.md) distingue comprobaciones ejecutadas de pendientes.
+1. **Definición visual.** Se partió de mockups con estructura de periódico, manteniendo su composición, jerarquía y orden de lectura.
+2. **Sistema editorial.** Se definieron colores, fuentes locales, espaciado, profundidad y componentes reutilizables, con adaptación a móvil, tablet y escritorio.
+3. **Contenido y componentes.** El perfil, las tarjetas y los casos técnicos se separaron de la presentación mediante datos e interfaces TypeScript. Inicio y listado comparten las mismas tarjetas.
+4. **Interacción y animación.** Se implementaron ilustraciones SVG y transiciones CSS: personajes, símbolo giratorio, trazado de Java, Octocat y doblez de papel. Un control permite pausar el movimiento y se respeta la preferencia de movimiento reducido.
+5. **Documentación de proyectos.** Se prepararon cuatro variantes para sitios web, ecommerce, aplicaciones con backend y APIs. ANDEC, EVOX y Tenso presentan casos reales; las variantes de aplicación y API son ejemplos identificados para futuros trabajos.
+6. **Revisión.** Se comprobaron la presentación responsive, navegación por teclado, enlaces, estructura de las fichas y compilación de producción. GitHub Actions ejecuta las comprobaciones del proyecto.
 
-Los detalles priorizan el proceso, los diagramas de arquitectura, las responsabilidades de los módulos y sus archivos de código. Cada proyecto conserva una única imagen en el hero; el producto completo se explora mediante su enlace. No se incluyen galerías de pantallas ni visores. Las tarjetas mantienen el doblez decorativo y un enlace horizontal legible a «Más detalles».
+## Criterios de implementación
 
-## Organización y mantenimiento
-
-```text
-src/
-  assets/                 Retrato y capturas optimizados durante el build
-  components/             Cabecera, tarjetas, botones e ilustraciones
-    project-details/      Proceso, mapas SVG, módulos y figuras
-  data/                   Perfil, proyectos y casos técnicos
-  layouts/                Documento HTML y metadatos compartidos
-  pages/                  Rutas estáticas y generación de fichas
-  scripts/                Movimiento y navegación progresiva
-  styles/                 Sistema editorial y estilos de fichas
-  types/                  Contratos de los detalles de proyectos
-public/                   Favicon, textura, imagen social y licencias
-scripts/                  Generación de imagen social y verificación del build
-docs/                     Documentación de desarrollo y mantenimiento
-```
-
-- [Arquitectura](docs/architecture.md): generación estática, componentes, datos y JavaScript del navegador.
-- [Guía de contenido](docs/content-guide.md): editar el perfil, añadir proyectos y preparar diagramas y evidencias.
-- [Pendientes de documentación](docs/project-documentation.md): información concreta que falta confirmar en cada fase marcada «Por documentar».
-- [Desarrollo y diseño](docs/development.md): decisiones, animaciones, accesibilidad y revisión manual.
-- [GitHub y publicación](docs/github-and-deployment.md): repositorio, commits, CI y configuración del alojamiento.
-- [Validación actual](VALIDATION.md): alcance y resultados de las comprobaciones.
-- [Recursos de terceros](THIRD_PARTY_NOTICES.md): fuentes, iconos, marcas y capturas.
-
-## Estado y próximos contenidos
-
-El CV, el proyecto personal y los grupos definitivos de Arquitectura y Cloud & Operaciones siguen pendientes. ANDEC y EVOX tienen sus cuatro fases documentadas: el contexto y las decisiones proceden del relato del autor, y la implementación se describe desde sus fuentes. Tenso mantiene pendiente confirmar la integración entregada. Solo Tenso y las vistas de plantilla conservan `noindex, follow`; las fichas reales de ANDEC y EVOX ya no se consideran borradores. Los enlaces de contacto y las webs freelance están configurados.
-
-Antes de publicar, debe definirse el dominio en `astro.config.mjs`. El proyecto está preparado para servir desde la raíz de un dominio; un despliegue bajo una subcarpeta requiere adaptar las rutas. La configuración de GitHub Actions valida el código y no publica el sitio.
-
-Este repositorio no declara una licencia general de reutilización. Las fuentes e iconos conservan sus licencias específicas; las marcas, fotografías y capturas mantienen sus derechos correspondientes. Consulta los [avisos de terceros](THIRD_PARTY_NOTICES.md).
+- **Identidad consistente:** cabecera, navegación, tarjetas y fichas comparten el lenguaje editorial.
+- **Contenido honesto:** los objetivos se distinguen de los resultados medidos y los ejemplos no se presentan como trabajos realizados.
+- **Arquitectura visual:** diagramas SVG muestran componentes, tecnologías, responsabilidades y conexiones.
+- **Movimiento progresivo:** las animaciones decorativas se pausan fuera de pantalla y al ocultar la pestaña; la información permanece disponible sin JavaScript.
+- **Accesibilidad:** estructura semántica, foco visible, textos alternativos y estados claros para los accesos pendientes.
+- **Carga estática:** páginas e imágenes se preparan durante la compilación; el portafolio no necesita una base de datos ni un servidor de aplicación.

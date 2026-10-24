@@ -7,6 +7,11 @@ dist/
 .DS_Store
 artifacts/
 
+# Private technical manuals, PDF deliveries and rendering intermediates.
+/local-docs/
+/output/pdf/
+/tmp/pdfs/
+
 # Local files not used by the portfolio.
 /build_manual.py
 /src/assets/foto-perfil.jpeg
