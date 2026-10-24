@@ -2,6 +2,16 @@
 
 Este registro describe la versión actual y separa las comprobaciones automáticas de las revisiones visuales anteriores. Última revisión: **23 de octubre de 2026**.
 
+## ANDEC y EVOX documentados con el autor
+
+- Completadas definición y diseño de ANDEC y EVOX con el relato del autor. Sus cuatro fases están documentadas y desaparecen los indicadores pendientes tanto de las fichas como de sus referencias de plantilla.
+- ANDEC incorpora el contexto de primera web, prioridades del catálogo, prototipado y tres decisiones sobre Astro/Tailwind, MDX y PHP en Hostinger. Los objetivos de SEO y captación no se presentan como resultados medidos.
+- EVOX incorpora la modernización de una tienda existente, requisitos de catálogo y compra, dos iteraciones de diseño y la necesidad de Shop the Look. Se añade el módulo de acceso por correo y sus archivos, separándolo del checkout; el mapa tiene seis nodos principales.
+- Los casos reales de ANDEC y EVOX ya no llevan `noindex` por fases pendientes. Las cuatro variantes y el catálogo de plantillas mantienen `noindex`; Tenso conserva una fase de integración pendiente y sus metadatos de borrador.
+- `npm run validate`: 39 archivos sin errores, advertencias ni sugerencias; 11 páginas y 25 variantes de imagen generadas; diez rutas verificadas correctamente, incluidos los distintos estados de indexación.
+- Revisadas las dos fichas y sus referencias a 360, 768 y 1440 px: doce vistas sin desbordamientos, imágenes rotas, textos de nodos recortados ni etiquetas de conexiones sobre los nodos. Cada ficha mantiene una sola imagen de producto y tres decisiones técnicas.
+- Registro local: `artifacts/confirmed-projects-responsive-checks.json`. Captura: `artifacts/evox-documented-architecture.jpg`. No se enviaron códigos, formularios ni pedidos a los proyectos externos.
+
 ## Fichas centradas en desarrollo · 23 de octubre
 
 - Retiradas las galerías de los tres casos y sus variantes de plantilla. Cada ficha real muestra una sola imagen en el hero; implementación conserva módulos, responsabilidades, tecnologías, archivos y conexiones.
@@ -59,7 +69,7 @@ Los cambios de documentación y CI no modifican la composición visual. No se at
 - La descarga del CV se verificará cuando se incorpore el PDF. El acceso permanece identificado como pendiente.
 - No se ejecutaron envíos de formularios, mensajes de WhatsApp, compras, pagos ni entregas SMTP en los sitios de clientes.
 - No se documentan puntuaciones de Lighthouse ni una certificación de accesibilidad. Cualquier métrica futura debe indicar fecha, URL y condiciones de prueba.
-- Las fases pendientes de evidencia en los casos reales mantienen sus metadatos de borrador. La validación del portafolio no confirma la infraestructura productiva de esos proyectos.
+- La integración de Tenso mantiene su estado pendiente y los metadatos de borrador. La validación del portafolio no confirma la infraestructura productiva de los proyectos externos.
 
 ## Revisión antes de publicar
 

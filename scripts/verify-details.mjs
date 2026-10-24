@@ -5,6 +5,7 @@ import { resolve, join } from 'node:path';
 const output = resolve('dist');
 const cases = ['/plantillas/estatica/', '/plantillas/ecommerce/', '/plantillas/aplicacion-web/', '/plantillas/backend/', '/proyectos/andec-coberturas/', '/proyectos/evox/', '/proyectos/tenso-lonas-peru/'];
 const routes = ['/', '/proyectos/', '/plantillas/', ...cases];
+const publishedCases = new Set(['/proyectos/andec-coberturas/', '/proyectos/evox/']);
 const readRoute = path => readFile(join(output, path, 'index.html'), 'utf8');
 const pageCache = new Map();
 const getPage = async path => {
@@ -14,7 +15,8 @@ const getPage = async path => {
 
 for (const route of routes) {
   const html = await getPage(route);
-  if (route.startsWith('/plantillas/') || cases.includes(route)) assert.match(html, /<meta name="robots" content="noindex, follow"/u, `${route}: previews and draft cases must not be indexed`);
+  if (publishedCases.has(route)) assert.doesNotMatch(html, /<meta name="robots" content="[^"]*noindex/u, `${route}: documented cases may be indexed`);
+  else if (route.startsWith('/plantillas/') || cases.includes(route)) assert.match(html, /<meta name="robots" content="noindex, follow"/u, `${route}: previews and draft cases must not be indexed`);
   assert.equal((html.match(/<h1(?:\s|>)/gu) ?? []).length, 1, `${route}: one primary heading`);
   const ids = [...html.matchAll(/\sid="([^"]+)"/gu)].map(match => match[1]);
   assert.equal(new Set(ids).size, ids.length, `${route}: duplicate HTML/SVG IDs`);
@@ -68,6 +70,12 @@ assert.match(tenso, /Markdown/u);
 assert.match(tenso, /Turnstile/u);
 assert.match(tenso, /SMTP/u);
 assert.match(tenso, /api\/cotizar.php/u);
+assert.equal((tenso.match(/class="process-status"/gu) ?? []).length, 1, 'Tenso retains its pending integration phase');
+for (const route of ['/proyectos/andec-coberturas/', '/plantillas/estatica/', '/proyectos/evox/', '/plantillas/ecommerce/']) {
+  const html = await getPage(route);
+  assert(!html.includes('Por documentar'), `${route}: author-confirmed definition and design have no pending labels`);
+  assert.match(html, /id="decisiones"/u, `${route}: technical decisions are present`);
+}
 const templates = await getPage('/plantillas/');
 assert.equal((templates.match(/class="template-index__card"/gu) ?? []).length, 4, 'Real projects do not add duplicate template variants');
 for (const route of ['/plantillas/ecommerce/', '/proyectos/evox/']) {
@@ -79,6 +87,10 @@ for (const route of ['/plantillas/ecommerce/', '/proyectos/evox/']) {
   assert.match(html, /Base tecnológica/u);
   assert.match(html, /WooCommerce/u);
   assert.match(html, /UBIGEO/u);
+  assert.match(html, /Shop the Look/u);
+  assert.match(html, /Acceso por código de correo/u);
+  assert.match(html, /account-auth\.php/u);
+  assert.match(html, /independiente del checkout/u, 'Account authentication is distinct from checkout');
 }
 const backend = await getPage('/plantillas/backend/');
 assert.match(backend, /TareaService/u);
@@ -90,4 +102,4 @@ for (const route of ['/plantillas/aplicacion-web/', '/plantillas/backend/']) {
   assert(!/href="https?:\/\//u.test(html), `${route}: examples must not invent live destinations`);
 }
 await stat(join(output, 'licenses/bootstrap-icons.txt'));
-console.log('✓ Three real cases, four template variants and shared wordmark are consistent.');
+console.log('✓ ANDEC and EVOX documented; Tenso integration pending; four template variants consistent.');

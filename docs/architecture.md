@@ -77,3 +77,7 @@ Las imágenes de `src/assets/` se importan como `ImageMetadata` y se renderizan 
 Playfair Display y Source Serif 4 se empaquetan desde Fontsource y se sirven localmente. Los archivos de `public/` se copian sin transformación; la imagen social se regenera con `scripts/generate-social-image.mjs`.
 
 El layout solo genera canonical y URLs sociales absolutas cuando se configura `Astro.site`. Una ficha es borrador si es un ejemplo o alguna fase está `pending`; los borradores y las vistas de plantilla reciben `noindex, follow`.
+
+ANDEC y EVOX completaron sus fases de definición y diseño con el relato del autor. Sus fichas reales pueden indexarse conforme a esa regla; las referencias de plantilla mantienen `noindex`. Tenso conserva una fase de integración pendiente.
+
+En el mapa de EVOX, el acceso por correo es un módulo propio dentro del entorno WordPress/PHP. EVOX Core lo carga y sus usuarios y sesiones se apoyan en WordPress y WooCommerce. Este módulo de cuentas no valida de forma obligatoria el checkout ni sustituye el motor comercial.

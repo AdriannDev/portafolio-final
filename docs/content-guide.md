@@ -71,7 +71,7 @@ Utiliza `ProjectCaseStudy` de `src/types/project-details.ts`. Para un nuevo caso
 6. Añade la imagen de portada y destinos reales. Las acciones de página, demo, documentación y repositorio solo aparecen cuando su URL está definida.
 7. Compila y verifica la ruta, sus enlaces y el mapa en los tres anchos de referencia.
 
-No marques una fase como verificada solo para eliminar `noindex`. Los templates siempre llevan `noindex`; las referencias con fases pendientes también. Al completar la documentación, revisa las expectativas de metadatos del verificador, que actualmente comprueba los casos en preparación. Consulta [qué falta por proyecto](project-documentation.md): no se exige Figma, capturas adicionales ni un brief formal si el proceso se puede describir con precisión.
+No marques una fase como verificada solo para eliminar `noindex`. Los templates siempre llevan `noindex`; las referencias con fases pendientes también. El verificador distingue ANDEC y EVOX documentados de Tenso en preparación. Al completar otro caso, actualiza esas expectativas de metadatos. Consulta [el estado por proyecto](project-documentation.md): no se exige Figma, capturas adicionales ni un brief formal si el proceso se puede describir con precisión.
 
 ## Nodos y conexiones
 

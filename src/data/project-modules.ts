@@ -35,7 +35,7 @@ export const andecModules: ImplementationModule[] = [
 export const evoxModules: ImplementationModule[] = [
   {
     name: 'Producto y escenas', kind: 'custom',
-    responsibility: 'Galería, documentos, datos dinámicos y escenas con hotspots conectan los componentes visuales con los productos de la tienda.',
+    responsibility: 'Los componentes de producto y los datos dinámicos se integran con Shop the Look: escenas con hotspots que permiten consultar los productos asociados.',
     technologies: ['PHP', 'JavaScript', 'Bricks'],
     sources: ['evox-core/includes/product-page.php', 'evox-core/includes/dynamic-tags.php', 'shop-the-look/evox-shop-the-look.php'],
     connections: ['Plantillas Bricks', 'Productos de WooCommerce'],
@@ -60,6 +60,13 @@ export const evoxModules: ImplementationModule[] = [
     technologies: ['PHP', 'WooCommerce API'],
     sources: ['evox-core/includes/payment-qr.php', 'evox-core/includes/order-pay.php'],
     connections: ['WC_Payment_Gateway', 'Pedido de WooCommerce', 'Revisión del operador'],
+  },
+  {
+    name: 'Acceso por código de correo', kind: 'custom',
+    responsibility: 'Genera y verifica códigos para acceder a cuentas mediante usuarios y sesiones de WordPress. Este acceso es independiente del checkout.',
+    technologies: ['PHP', 'JavaScript', 'WordPress'],
+    sources: ['evox-core/includes/account-auth.php', 'evox-core/assets/account-auth.js', 'evox-core/templates/form-login.php'],
+    connections: ['Usuarios y sesiones de WordPress', 'Clientes de WooCommerce', 'wp_mail()'],
   },
   {
     name: 'Motor comercial', kind: 'platform',

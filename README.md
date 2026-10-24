@@ -101,7 +101,7 @@ docs/                     Documentación de desarrollo y mantenimiento
 
 ## Estado y próximos contenidos
 
-El CV, el proyecto personal y los grupos definitivos de Arquitectura y Cloud & Operaciones siguen pendientes. Las tres fichas reales conservan fases pendientes de evidencia y, junto con los templates, usan `noindex, follow`. Los enlaces de contacto y las webs freelance están configurados.
+El CV, el proyecto personal y los grupos definitivos de Arquitectura y Cloud & Operaciones siguen pendientes. ANDEC y EVOX tienen sus cuatro fases documentadas: el contexto y las decisiones proceden del relato del autor, y la implementación se describe desde sus fuentes. Tenso mantiene pendiente confirmar la integración entregada. Solo Tenso y las vistas de plantilla conservan `noindex, follow`; las fichas reales de ANDEC y EVOX ya no se consideran borradores. Los enlaces de contacto y las webs freelance están configurados.
 
 Antes de publicar, debe definirse el dominio en `astro.config.mjs`. El proyecto está preparado para servir desde la raíz de un dominio; un despliegue bajo una subcarpeta requiere adaptar las rutas. La configuración de GitHub Actions valida el código y no publica el sitio.
 
