@@ -1,6 +1,6 @@
 # Documentación y pendientes de los proyectos
 
-El contexto de ANDEC y EVOX se completó con la explicación directa del autor. Las decisiones iniciales y el prototipado se describen desde ese relato; las tecnologías, módulos, archivos y conexiones se apoyan en las fuentes de los proyectos. Son dos fuentes complementarias: el código no permite reconstruir por sí solo las conversaciones con el cliente.
+El contexto de ANDEC, EVOX y Tenso se completó con la explicación directa del autor. Las decisiones iniciales y el prototipado se describen desde ese relato; las tecnologías, módulos, archivos y conexiones se apoyan en las fuentes de los proyectos. Son dos fuentes complementarias: el código no permite reconstruir por sí solo las conversaciones con el cliente.
 
 | Proyecto | Estado de las fases |
 | --- | --- |
@@ -46,11 +46,26 @@ Las fases iniciales están documentadas con el relato del autor. Los módulos y 
 
 ## Tenso Lonas Perú
 
+### Contexto confirmado por el autor
+
+- El sitio prioriza los servicios para mostrar lo que realiza el cliente, junto con sus trabajos y canales de consulta.
+- El SEO fue una prioridad al elegir la tecnología, con un enfoque similar al de ANDEC. La ficha lo presenta como un objetivo, sin atribuir posiciones en buscadores ni resultados medidos.
+- El proceso de desarrollo también fue similar al de ANDEC: propuesta visual, prototipado y revisión de la estructura antes de desarrollar. No se atribuye una herramienta concreta.
+- Las decisiones explican generación con Astro, contenido Markdown tipado y mejora progresiva del formulario propio. El código incluye los componentes de SEO y el endpoint PHP.
+
+Las prioridades y el proceso están documentados; esa confirmación no establece qué configuración de correo o protección anti-spam quedó activa en producción. No se atribuye a Tenso el proveedor de alojamiento de ANDEC.
+
+### Integración pendiente
+
 | Fase pendiente | Información necesaria |
 | --- | --- |
 | Integración | Confirmar si `/api/cotizar.php` es el endpoint utilizado en la web entregada y si Turnstile y SMTP forman parte de la integración efectiva o quedaron preparados en el código. Si hubo otra solución final, indicar cuál. |
 
 El código ya muestra el formulario, POST/Fetch, validación en PHP, verificación anti-spam y envío SMTP. El pendiente distingue esa implementación de la configuración final utilizada. No se necesitan contraseñas, tokens, archivos privados ni una prueba pública de correo. El proveedor de alojamiento solo debe añadirse si se confirma y ayuda a entender dónde se ejecuta PHP.
+
+## Presentación de decisiones
+
+Las decisiones de todas las fichas y plantillas muestran necesidad, elección y efecto. La referencia al componente se conserva como texto; no hay enlaces ni controles de «Ubicar en el mapa».
 
 ## Cómo cerrar una fase pendiente
 

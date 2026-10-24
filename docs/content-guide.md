@@ -95,4 +95,4 @@ Cada módulo explica una responsabilidad, tecnologías, conexiones y `kind: 'cus
 
 En EVOX, WooCommerce aporta productos, carrito, sesión y pedidos. Los plugins propios amplían la presentación, entrega y método QR; no se atribuye el motor de ecommerce al desarrollo propio. En las webs corporativas se distingue el sitio generado de los endpoints PHP externos a este portafolio.
 
-Cada decisión relaciona `need`, `choice`, `effect` y `target`. Evita repetir el mismo párrafo en el mapa, la tarjeta y el pie de figura. No añadas métricas, herramientas de diseño o resultados que no tengan evidencia.
+Cada decisión relaciona `need`, `choice`, `effect` y `target`. La referencia `target` se muestra como texto y no genera un enlace al mapa. Evita repetir el mismo párrafo en el mapa, la tarjeta y el pie de figura. No añadas métricas, herramientas de diseño o resultados que no tengan evidencia.

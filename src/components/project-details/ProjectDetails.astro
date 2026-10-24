@@ -61,7 +61,7 @@ const sections = [
       <ImplementationModules modules={study.modules} example={study.mode === 'example'} />
     </DetailSection>
     {!!study.decisions.length && <DetailSection id="decisiones" number="04" title="Decisiones técnicas" caption={study.mode === 'example' ? 'Criterios ilustrativos de organización del código.' : 'Las elecciones que dan forma a esta solución.'}>
-      <div class="case-decisions">{study.decisions.map((decision,index) => <article><span class="eyebrow">Decisión 0{index+1} · {decision.target}</span><dl><div><dt>Necesidad</dt><dd>{decision.need}</dd></div><div><dt>Elección</dt><dd>{decision.choice}</dd></div><div><dt>Efecto{study.mode === 'example' && ' esperado'}</dt><dd>{decision.effect}</dd></div></dl><a href="#arquitectura">Ubicar en el mapa <span aria-hidden="true">↗</span></a></article>)}</div>
+      <div class="case-decisions">{study.decisions.map((decision,index) => <article><span class="eyebrow">Decisión 0{index+1} · {decision.target}</span><dl><div><dt>Necesidad</dt><dd>{decision.need}</dd></div><div><dt>Elección</dt><dd>{decision.choice}</dd></div><div><dt>Efecto{study.mode === 'example' && ' esperado'}</dt><dd>{decision.effect}</dd></div></dl></article>)}</div>
     </DetailSection>}
     <div class="case-closing"><div><span class="eyebrow">Fin de esta edición</span><p>{study.mode === 'example' ? 'Una estructura para contar tu próximo proyecto.' : 'Arquitectura y desarrollo, contados desde el código.'}</p></div><Action href="/proyectos/" label="Volver a proyectos" icon="arrow" /></div>
     {preview && <p class="template-index-link"><a href="/plantillas/">Ver los cuatro templates</a></p>}

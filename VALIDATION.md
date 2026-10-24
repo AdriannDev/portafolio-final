@@ -2,6 +2,16 @@
 
 Este registro describe la versión actual y separa las comprobaciones automáticas de las revisiones visuales anteriores. Última revisión: **23 de octubre de 2026**.
 
+## Tenso: servicios y SEO; decisiones sin enlaces al mapa
+
+- Actualizados el objetivo, rol, alcance y proceso de Tenso con la confirmación del autor: web de servicios, prioridad de SEO y desarrollo similar al de ANDEC, con propuesta y prototipado previos.
+- Las tres decisiones de Tenso explican generación y metadatos con Astro, contenido Markdown tipado y mejora progresiva del formulario PHP. No se atribuye una mejora medida de posicionamiento ni un proveedor de alojamiento no confirmado.
+- Retirados los enlaces de localización en el mapa del componente compartido de decisiones y sus estilos. Las decisiones conservan necesidad, elección, efecto y la referencia textual al componente.
+- `npm run validate`: 39 archivos sin errores, advertencias ni sugerencias; build de 11 páginas y 25 variantes de imagen; diez rutas verificadas, incluida la ausencia del texto retirado.
+- Revisadas siete fichas a 360, 768 y 1440 px: 21 vistas sin desbordamientos ni imágenes rotas, sin enlaces o botones dentro de las decisiones y sin el texto retirado. La navegación principal entre secciones sigue disponible.
+- Tenso conserva una sola fase pendiente: confirmar la configuración entregada de PHP, Turnstile y SMTP. La confirmación del proceso de diseño no sustituye ese dato de integración.
+- Registro local: `artifacts/decisions-without-map-controls-checks.json`. Captura: `artifacts/tenso-decisions-without-map-links.jpg`.
+
 ## ANDEC y EVOX documentados con el autor
 
 - Completadas definición y diseño de ANDEC y EVOX con el relato del autor. Sus cuatro fases están documentadas y desaparecen los indicadores pendientes tanto de las fichas como de sus referencias de plantilla.

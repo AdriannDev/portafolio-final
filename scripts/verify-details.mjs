@@ -15,6 +15,7 @@ const getPage = async path => {
 
 for (const route of routes) {
   const html = await getPage(route);
+  assert(!html.includes('Ubicar en el mapa'), `${route}: no decision-to-map controls`);
   if (publishedCases.has(route)) assert.doesNotMatch(html, /<meta name="robots" content="[^"]*noindex/u, `${route}: documented cases may be indexed`);
   else if (route.startsWith('/plantillas/') || cases.includes(route)) assert.match(html, /<meta name="robots" content="noindex, follow"/u, `${route}: previews and draft cases must not be indexed`);
   assert.equal((html.match(/<h1(?:\s|>)/gu) ?? []).length, 1, `${route}: one primary heading`);

@@ -51,7 +51,6 @@
 .case-decisions dl > div { margin-top: 14px; }
 .case-decisions dt { text-transform: uppercase; letter-spacing: .09em; color: var(--muted); font-size: 9px; margin-bottom: 6px; }
 .case-decisions dd { margin: 0; font-size: 14px; line-height: 1.5; }
-.case-decisions a { display: inline-flex; align-items: center; gap: 14px; min-height: 44px; font-size: 12px; }
 .case-closing { display: flex; align-items: center; justify-content: space-between; gap: 25px; padding: 33px 0; }
 .case-closing p { font-family: var(--display); font-size: 23px; letter-spacing: -.02em; margin-top: 9px; max-width: 33ch; }
 .case-closing > .action { flex-shrink: 0; }
